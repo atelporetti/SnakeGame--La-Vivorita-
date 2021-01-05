@@ -17,7 +17,7 @@ raiz.config(bg='black', width='640', height='480',
 raiz.rowconfigure((0,3), weight=1)
 raiz.columnconfigure((0,1), weight=1)
 
-imagen_bienvenida = PhotoImage(file='snakeWelcomeResized.png')
+imagen_bienvenida = PhotoImage(file='img/snakeWelcomeResized.png')
 # Para ajustar la imagen
 imagen_bienvenida = imagen_bienvenida.zoom(1, 1)
 imagen_bienvenida = imagen_bienvenida.subsample(1)
@@ -78,8 +78,8 @@ def cambio_musica():
     elif btn_musica_on_off['text'] == 'Musica ON':
         btn_musica_on_off['text'] = 'Musica OFF'
         btn_musica_on_off['fg'] = 'white'
-        pygame.mixer.music.load('snake.mp3') #Loading File Into Mixer
-        pygame.mixer.music.play() #Playing It In The Whole Device
+        pygame.mixer.music.load('audio/snake.mp3')
+        pygame.mixer.music.play()
 
 btn_musica_on_off = Button(
     frame, text=txt_musica_on_off, command=cambio_musica)
