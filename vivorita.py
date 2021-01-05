@@ -6,6 +6,10 @@ import pygame
 
 pygame.init()
 
+filas = 5
+columnas = 2
+
+
 raiz = Tk()
 raiz.title('La Vivorita: el juego')
 raiz.resizable(True, True)
@@ -14,41 +18,55 @@ raiz.iconbitmap('snake.ico')
 # raiz.geometry('640x480')
 raiz.config(bg='black', width='640', height='480',
             bd='20', relief='groove', cursor='tcross')
-raiz.rowconfigure((0, 3), weight=1)
-raiz.columnconfigure((0, 1), weight=1)
+raiz.rowconfigure((0, filas), weight=1)
+raiz.columnconfigure((0, columnas), weight=1)
 
-imagen_bienvenida = PhotoImage(file='img/snakeWelcomeResized.png')
+
+# -------------- IMAGEN---------------
+
+imagen_bienvenida = PhotoImage(file='img/snakeWelcomeResized2.png')
 # Para ajustar la imagen
 imagen_bienvenida = imagen_bienvenida.zoom(1, 1)
 imagen_bienvenida = imagen_bienvenida.subsample(1)
+# ------------------------------------
+
 
 frame = Frame(raiz)
 frame.config(background='black')  # tcross, cross, dotbox
 # Rellena el frame y el fondo de la raiz no se ve
 frame.grid(sticky='nsew')
-frame.rowconfigure((0, 3), weight=1)
-frame.columnconfigure((0, 1), weight=1)
+frame.rowconfigure((0, filas), weight=1)
+frame.columnconfigure((0, columnas), weight=1)
 
+#MEJORAR EL SCROLL
+scroll = Scrollbar(raiz, command=frame)
+scroll.grid(row=0, column=3, sticky='nsew') 
 
 bienvenida_img = Label(frame, image=imagen_bienvenida)
 bienvenida_img.grid(row=0, column=0, columnspan=2,
                     sticky='nsew', padx=10, pady=10)
-bienvenida_img.rowconfigure((0, 3), weight=1)
-bienvenida_img.columnconfigure((0, 1), weight=1)
 
-bienvenida = Label(frame, text='La Vivorita: el juego', font=("256 Bytes", 40), bg='black', fg='white')
+bienvenida = Label(frame, text='La Vivorita: el juego',
+                   font=("256 Bytes", 40), bg='black', fg='white')
 # RitzFLF, 256 Bytes, RightBankFLF, Franchise,
-bienvenida.grid(row=1, column=0, columnspan=2, sticky='nsew', padx=10, pady=10)
-bienvenida.rowconfigure((0, 3), weight=1)
-bienvenida.columnconfigure((0, 1), weight=1)
+bienvenida.grid(row=1, column=0, columnspan=3, sticky='nsew', padx=10, pady=10)
+bienvenida.rowconfigure((0, filas), weight=1)
+bienvenida.columnconfigure((0, columnas), weight=1)
+
+
+nombre = StringVar()
 
 nombre_j = Label(frame, text='Nombre Jugador:')
 nombre_j.config(bg='black', fg='white', font=("RitzFLF", 12))
 nombre_j.grid(row=2, column=0, sticky='nsew', padx=10, pady=10)
-nombre_jugador = Entry(frame)
+nombre_jugador = Entry(frame, textvariable=nombre)
 nombre_jugador.grid(row=2, column=1, sticky='nsew', padx=10, pady=10)
-nombre_jugador.config(bg='black', fg='#B2BD08', justify='center', font=("RitzFLF", 12))
+nombre_jugador.config(bg='black', fg='#B2BD08',
+                      justify='center', font=("RitzFLF", 12))
 
+
+#nom = Label(frame, textvariable=nombre)
+#nom.grid(row=3, column=0, sticky='nsew', padx=10, pady=10)
 """
 def play():
     pygame.mixer.music.load('audio\snake.mp3')
@@ -91,32 +109,58 @@ btn_musica_on_off = Button(
     frame, text=txt_musica_on_off, command=cambio_musica)
 
 btn_musica_on_off.grid(row=3, column=1, sticky='nsew', padx=10, pady=10)
-btn_musica_on_off.config(bg='black', fg='white', justify='center', font=("RitzFLF", 12))
+btn_musica_on_off.config(bg='black', fg='white',
+                         justify='center', font=("RitzFLF", 12))
 
 
 velocidad = 0
-vel = Label(frame).grid(row=5, column=1, sticky='nsew', padx=10, pady=10)
-
-
 dificultad = IntVar()
-
 
 def cambia_dificultad():
     if dificultad.get() == 0:
         velocidad = 1
         vel.config(text='Facil')
+        facil['fg'] = '#B2BD08'
+        dificil['fg'] = 'white'
     elif dificultad.get() == 1:
         velocidad = 2
         vel.config(text='Dificil')
+        dificil['fg'] = '#B2BD08'
+        facil['fg'] = 'white'
+
+
+def guarda_nombre():
+    if (nombre.get() == '' and dificultad.get() != (0 or 1)):
+        print('Elija un nombre y nivel de dificultad')
+    elif (nombre.get() == ''):
+        print('Elija un nombre')
+    elif (dificultad.get() != (0 or 1)):
+        print('Elija la dificultad')
+    elif (nombre.get() and dificultad.get()):
+        print('Comenzando juego...')
+        return nombre.get(), dificultad.get()
 
 
 facil = Radiobutton(frame, text='Fácil', variable=dificultad,
                     value=0, command=cambia_dificultad)
 facil.config(bg='black', fg='white', justify='center', font=("RitzFLF", 12))
 facil.grid(row=4, column=0, sticky='nsew', padx=10, pady=10)
-dificil = Radiobutton(frame, text='Dificil', variable=dificultad, value=1, command=cambia_dificultad)
+dificil = Radiobutton(frame, text='Dificil',
+                      variable=dificultad, value=1, command=cambia_dificultad)
 dificil.config(bg='black', fg='white', justify='center', font=("RitzFLF", 12))
 dificil.grid(row=4, column=1, sticky='nsew', padx=10, pady=10)
+
+vel = Label(frame)
+vel.grid(row=5, column=1, sticky='nsew', padx=10, pady=10)
+vel.config(bg='black', fg='white', justify='center', font=("RitzFLF", 12))
+
+
+jugar = Button(frame, text='JUGAR')
+jugar.grid(row=5, column=0, columnspan=2, sticky='nsew', padx=10, pady=10)
+jugar.config(bg='black', fg='#B2BD08', justify='center',
+             font=("256 Bytes", 20), command=guarda_nombre)
+jugar.rowconfigure((0, filas), weight=1)
+jugar.columnconfigure((0, columnas), weight=1)
 
 
 raiz.mainloop()
