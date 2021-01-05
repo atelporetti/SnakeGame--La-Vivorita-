@@ -31,8 +31,7 @@ frame.columnconfigure((0,1), weight=1)
 
 
 bienvenida_img = Label(frame, image=imagen_bienvenida)
-bienvenida_img.grid(row=0, column=0, columnspan=2,
-                    sticky='nsew', padx=10, pady=10)
+bienvenida_img.grid(row=0, column=0, columnspan=2, sticky='nsew', padx=10, pady=10)
 bienvenida_img.rowconfigure((0,3), weight=1)
 bienvenida_img.columnconfigure((0,1), weight=1)
 
@@ -49,11 +48,9 @@ nombre_jugador = Entry(frame)
 nombre_jugador.grid(row=2, column=1, sticky='nsew', padx=10, pady=10)
 nombre_jugador.config(bg='black', fg='#B2BD08', justify='center', font=("RitzFLF", 12))
 
-txt_musica_on_off = 'Musica OFF'
-
 def play():
-    pygame.mixer.music.load('snake.mp3') #Loading File Into Mixer
-    pygame.mixer.music.play() #Playing It In The Whole Device
+    pygame.mixer.music.load('audio\snake.mp3')
+    pygame.mixer.music.play()
 Button(raiz,text="Play",command=play).grid(row=2, column=2, sticky='nsew', padx=10, pady=10)
 
 """
@@ -71,10 +68,12 @@ Sound Effects:
 0:46 - Power Up
 """
 
+txt_musica_on_off = 'Musica OFF'
 def cambio_musica():
     if btn_musica_on_off['text'] == 'Musica OFF':
         btn_musica_on_off['text'] = 'Musica ON'
         btn_musica_on_off['fg'] = '#B2BD08'
+        pygame.mixer.music.pause()
     elif btn_musica_on_off['text'] == 'Musica ON':
         btn_musica_on_off['text'] = 'Musica OFF'
         btn_musica_on_off['fg'] = 'white'
