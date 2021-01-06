@@ -24,10 +24,10 @@ raiz.columnconfigure((0, columnas), weight=1)
 
 # -------------- IMAGEN---------------
 
-imagen_bienvenida = PhotoImage(file='img/snakeWelcomeResized2.png')
+ph_imagen_bienvenida = PhotoImage(file='img/snakeWelcomeResized2.png')
 # Para ajustar la imagen
-imagen_bienvenida = imagen_bienvenida.zoom(1, 1)
-imagen_bienvenida = imagen_bienvenida.subsample(1)
+ph_imagen_bienvenida = ph_imagen_bienvenida.zoom(1, 1)
+ph_imagen_bienvenida = ph_imagen_bienvenida.subsample(1)
 # ------------------------------------
 
 
@@ -42,7 +42,7 @@ frame.columnconfigure((0, columnas), weight=1)
 scroll = Scrollbar(raiz, command=frame)
 scroll.grid(row=0, column=3, sticky='nsew') 
 
-lb_bienvenida_img = Label(frame, image=imagen_bienvenida)
+lb_bienvenida_img = Label(frame, image=ph_imagen_bienvenida)
 lb_bienvenida_img.grid(row=0, column=0, columnspan=2,
                     sticky='nsew', padx=10, pady=10)
 
@@ -136,11 +136,11 @@ def guarda_datos():
         alerta = 'Elija un nombre y nivel de dificultad'
         msj_alerta(alerta)
         return print(alerta)
-    if (nombre.get() == ''):
+    elif (nombre.get() == ''):
         alerta = 'Elija un nombre'
         msj_alerta(alerta)
         return print(alerta)
-    if (dificultad.get() == 0):
+    elif (dificultad.get() == 0):
         alerta = 'Elija la dificultad'
         msj_alerta(alerta)
         return print(alerta)
