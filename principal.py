@@ -2,7 +2,7 @@
 #                   python3 -m pip install -U pygame --user
 # https://www.pygame.org/wiki/GettingStarted
 
-"""
+
 import pygame
 import time
 import random
@@ -19,7 +19,7 @@ blue = (50, 153, 213)
 ancho = 640
 alto = 480
 
-#flags = pygame.FULLSCREEN
+flags = pygame.FULLSCREEN
 pantalla = pygame.display.set_mode((ancho, alto), flags)
 pygame.display.set_caption('Snake Game by Edureka')
 
@@ -146,3 +146,5 @@ while not game_over:
     pygame.draw.rect(pa)
 pygame.quit()
 quit()
+
+"""
