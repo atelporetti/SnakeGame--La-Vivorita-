@@ -1,31 +1,38 @@
-from tkinter import *
-
-from pygame import Color
-from ventana_inicio import *
+try:
+    from tkinter import *
+except:
+    from Tkinter import *
+from ventana_inicio import Inicio
 import constantes
-pygame.init()
 
-# -------------- CONTANTES---------------
-filas = 5
-columnas = 2
-# --------
+class Main(Tk):
+    def __init__(self):
+        Tk.__init__(self)
+        self._frame = None
+        self.cambia_frame(Inicio)
+        self.title(constantes.titulo)
+        self.resizable(False, False)
+        self.iconbitmap(constantes.icon)
+        ancho_pantalla = self.winfo_screenwidth()
+        self.geometry(f'723x698+{str(int(ancho_pantalla-0.75*ancho_pantalla))}+0')
+        # De permitir que se modifique el tamaño de pantalla, este seria el tamaño maximo permitido
+        self.maxsize(1366, 698)
+        #raiz.state("zoomed")
+        self.config(bg='black',
+                    bd='20',
+                    relief='groove',
+                    cursor='tcross')
+        self.rowconfigure((0, constantes.filas), weight=1)
+        self.columnconfigure((0, constantes.columnas), weight=1)
+
+    def cambia_frame(self, frame_class):
+        nuevo_frame = frame_class(self)
+        if self._frame is not None:
+            self._frame.grid_remove()
+        self._frame = nuevo_frame
+        self._frame.grid(row=0, column=0)
+
 if __name__ == "__main__":
-    raiz = Tk()
-    raiz.title(constantes.titulo)
-    raiz.resizable(False, False)
-    raiz.iconbitmap(constantes.icon)
-    ancho_pantalla = raiz.winfo_screenwidth()
-    raiz.geometry(f'723x698+{str(int(ancho_pantalla-0.75*ancho_pantalla))}+0')
-    # De permitir que se modifique el tamaño de pantalla, este seria el tamaño maximo permitido
-    raiz.maxsize(1366, 698)
-    # raiz.state("zoomed")
-    raiz.config(bg='black',
-                bd='20',
-                relief='groove',
-                cursor='tcross')
-    raiz.rowconfigure((0, filas), weight=1)
-    raiz.columnconfigure((0, columnas), weight=1)
-
-    Inicio(raiz).grid(sticky='nsew')
-
-    raiz.mainloop()
+    root = Main()
+    root.overrideredirect(False) #deshace el marco
+    root.mainloop()

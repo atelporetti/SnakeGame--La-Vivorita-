@@ -19,8 +19,7 @@ blue = (50, 153, 213)
 ancho = 640
 alto = 480
 
-flags = pygame.FULLSCREEN
-pantalla = pygame.display.set_mode((ancho, alto), flags)
+pantalla = pygame.display.set_mode((ancho, alto))
 pygame.display.set_caption('Snake Game by Edureka')
 
 clock = pygame.time.Clock()

@@ -5,8 +5,10 @@ step_len = 2 * height
 grid = {
     "tamanio": width * height,
     "background_color": "grey",
-}
 
+}
+filas = 5
+columnas = 2
 imagen_fondo = 'img/snakeWelcome658x288.png'
 icon = 'img/snake.ico'
 titulo = 'La Vivorita: el juego'
