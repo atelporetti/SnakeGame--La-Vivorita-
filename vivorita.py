@@ -1,12 +1,16 @@
 from tkinter import *
-
+from main import Main
 master = Tk()
 
 class Vivorita():
-    def __init__(self, raiz):
-        self.raiz = raiz
-        x, y = utils.random_coordinates()
-        self.blocks = collections.deque([shapes.Block(raiz, x, y)])
+    def __init__(self, master):
+        self.master = master
+        self.cabeza_X = Main.ancho_pantalla
+        self.cabeza_Y = Main.alto_pantalla
+        self.velocidad_X = 1
+        self.velocidad_Y = 1
+        self.col
+        self.blocks = collections.deque([shapes.Block(master, x, y)])
         self.block_coords = set([(x, y)])
 
 canvas_width = 80

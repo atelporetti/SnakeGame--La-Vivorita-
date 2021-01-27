@@ -2,6 +2,7 @@ try:
     from tkinter import *
 except:
     from Tkinter import *
+import pygame
 from ventana_inicio import Inicio
 import constantes
 
@@ -13,8 +14,9 @@ class Main(Tk):
         self.title(constantes.titulo)
         self.resizable(False, False)
         self.iconbitmap(constantes.icon)
-        ancho_pantalla = self.winfo_screenwidth()
-        self.geometry(f'723x698+{str(int(ancho_pantalla-0.75*ancho_pantalla))}+0')
+        self.ancho_pantalla = self.winfo_screenwidth()
+        self.alto_pantalla = self.winfo_screenheight()
+        self.geometry(f'723x698+{str(int(self.ancho_pantalla-0.75*self.ancho_pantalla))}+0')
         # De permitir que se modifique el tamaño de pantalla, este seria el tamaño maximo permitido
         self.maxsize(1366, 698)
         #raiz.state("zoomed")
@@ -33,6 +35,7 @@ class Main(Tk):
         self._frame.grid(row=0, column=0)
 
 if __name__ == "__main__":
+    pygame.init()
     root = Main()
     root.overrideredirect(False) #deshace el marco
     root.mainloop()

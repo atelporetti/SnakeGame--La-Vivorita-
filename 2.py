@@ -1,48 +1,46 @@
-import tkinter as tk
-import glob
+import os
+import pygame
+from tkinter import *
 
 
-
-class App:
-
-	def __init__(self, root):
-		self.root = root
-		self.menu()
-		self.text()
-		self.root.bind("<Control-l>", lambda x: self.hide())
-		self.hidden = 0
-
-	def menu(self):
-		self.frame1 = tk.Frame(self.root)
-		self.frame1.pack(side="left", fill=tk.BOTH, expand=1)
-		self.lb = tk.Listbox(self.frame1)
-		self.lb['bg'] = "black"
-		self.lb['fg'] = "lime"
-		self.lb.pack(side="left", fill=tk.BOTH, expand=1)
-		for file in glob.glob("*"):
-			self.lb.insert(tk.END, file)
-
-	def text(self):
-		self.frame2 = tk.Frame(self.root)
-		self.frame2.pack(side="left", fill=tk.BOTH, expand=1)
-		self.txt = tk.Text(self.frame2)
-		self.txt['bg'] = 'gold'
-		self.txt.pack(fill=tk.BOTH, expand=1)
-
-	def hide(self):
-		if self.hidden == 0:
-			self.frame1.destroy()
-			self.hidden = 1
-			print("Hidden", self.hidden)
-		else:
-			self.frame2.destroy()
-			self.menu()
-			self.text()
-			self.hidden = 0
-			print("Hidden", self.hidden)
+def play():
+    pygame.mixer.music.load('audio/snake2.wav')
+    pygame.mixer.music.play()
 
 
+def pause():
+    pygame.mixer.music.pause()
 
-root = tk.Tk()
-app = App(root)
+
+def unpause():
+    pygame.mixer.music.unpause()
+
+
+def sound():
+    pygame.mixer.Sound.play(sound_effect)
+
+
+pygame.init()
+sound_effect = pygame.mixer.Sound('audio/snake.wav')
+
+root = Tk()
+root.geometry('180x200')
+
+myframe = Frame(root)
+myframe.pack()
+
+mylabel = Label(myframe, text="Pygame Mixer")
+mylabel.pack()
+
+button1 = Button(myframe, text="Play", command=play, width=15)
+button1.pack(pady=5)
+button2 = Button(myframe, text="Sound", command=sound, width=15)
+button2.pack(pady=5)
+button3 = Button(myframe, text="Unpause", command=unpause, width=15)
+button3.pack(pady=5)
+button4 = Button(myframe, text="Pause", command=pause, width=15)
+button4.pack(pady=5)
+
+os.getcwd()  # Log this line.
+soundObj = pygame.mixer.Sound('audio/snake.wav')
 root.mainloop()

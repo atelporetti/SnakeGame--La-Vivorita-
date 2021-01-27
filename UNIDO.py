@@ -92,6 +92,10 @@ def msj_alerta(msj):
 
 
 # -------------- MUSICA---------------
+#sound_effect = pygame.mixer.Sound('audio/snake.wav') 
+#pygame.mixer.Sound.play(sound_effect)
+pygame.mixer.music.load('audio/inicio.wav')
+pygame.mixer.music.play(-1)
 # ------------------------------------
 
 txt_musica_on_off = 'Musica OFF'
@@ -153,6 +157,9 @@ def guarda_datos():
         msj_alerta(alerta)
         t = Timer(1.0, borrar_widget_grid)
         t.start()
+        pygame.mixer.music.stop()
+        sound_effect = pygame.mixer.Sound('audio/power_up.wav') 
+        pygame.mixer.Sound.play(sound_effect)
         return nombre.get(), dificultad.get()
 
 

@@ -23,6 +23,7 @@ class Inicio(Frame):
         self.dificultad = IntVar()
 
         self.crear_widgets()
+        self.reproducir_musica()
 
     def crear_widgets(self):
         self.ph_imagen_bienvenida = PhotoImage(file=constantes.imagen_fondo)
@@ -93,7 +94,11 @@ class Inicio(Frame):
                         justify='center',
                         font=(constantes.tipografia, 12),
                         command=lambda:[self.guarda_datos()])
-        
+    
+    def reproducir_musica(self):
+        pygame.mixer.music.load('audio/inicio.wav')
+        pygame.mixer.music.play(-1)
+
     def msj_alerta(self, msj):
         self.msg_alerta.config(text=str(msj))
         
@@ -129,6 +134,9 @@ class Inicio(Frame):
             self.msj_alerta(alerta)
             t = Timer(1.0, self.borrar_widget_grid)
             t.start()
+            pygame.mixer.music.stop()
+            sound_effect = pygame.mixer.Sound('audio/power_up.wav') 
+            pygame.mixer.Sound.play(sound_effect)
             return self.nombre.get(), self.dificultad.get()
 
     def cambia_dificultad(self):
