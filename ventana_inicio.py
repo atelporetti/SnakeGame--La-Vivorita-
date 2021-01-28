@@ -13,7 +13,7 @@ class Inicio(Frame):
         self._frame = Frame(master)
         self._frame.config(bg='black')
         self._frame.grid(row=0, column=0)
-        self.config(background='black')  # tcross, cross, dotbox
+        self.config(background='black')
         self.grid(sticky='nsew')
         self.rowconfigure((0, constantes.filas), weight=1)
         self.columnconfigure((0, constantes.columnas), weight=1)
@@ -33,7 +33,6 @@ class Inicio(Frame):
                                     padx=10, pady=10)
 
         self.lb_bienvenida = Label(self._frame, text=constantes.titulo,
-                        # RitzFLF, 256 Bytes, RightBankFLF, Franchise,
                                     font=(constantes.tipografia, 20),
                                     bg='black',
                                     fg='white')
@@ -49,7 +48,7 @@ class Inicio(Frame):
 
         self.lb_nombre_jugador = Entry(self._frame, textvariable=self.nombre)
         self.lb_nombre_jugador.grid(row=2, column=1, sticky='nsew', padx=10, pady=10)
-        self.lb_nombre_jugador.config(bg='black', fg='#B2BD08',
+        self.lb_nombre_jugador.config(bg='black', fg=constantes.color_tipografia,
                                 justify='center', font=(constantes.tipografia, 12))
         self.lb_nombre_jugador.focus()
 
@@ -90,13 +89,13 @@ class Inicio(Frame):
         self.btn_jugar = Button(self._frame, text='JUGAR')
         self.btn_jugar.grid(row=5, column=0, columnspan=2, sticky='nsew', padx=10, pady=10)
         self.btn_jugar.config(bg='black',
-                        fg='#B2BD08',
+                        fg=constantes.color_tipografia,
                         justify='center',
                         font=(constantes.tipografia, 12),
                         command=lambda:[self.guarda_datos()])
     
     def reproducir_musica(self):
-        pygame.mixer.music.load('audio/inicio.wav')
+        pygame.mixer.music.load(constantes.musica_inicio)
         pygame.mixer.music.play(-1)
 
     def msj_alerta(self, msj):
@@ -105,7 +104,7 @@ class Inicio(Frame):
     def cambio_musica(self):
         if self.btn_musica_on_off['text'] == 'Musica OFF':
             self.btn_musica_on_off['text'] = 'Musica ON'
-            self.btn_musica_on_off['fg'] = '#B2BD08'
+            self.btn_musica_on_off['fg'] = constantes.color_tipografia
             pygame.mixer.music.pause()
         elif self.btn_musica_on_off['text'] == 'Musica ON':
             self.btn_musica_on_off['text'] = 'Musica OFF'
@@ -135,18 +134,18 @@ class Inicio(Frame):
             t = Timer(1.0, self.borrar_widget_grid)
             t.start()
             pygame.mixer.music.stop()
-            sound_effect = pygame.mixer.Sound('audio/power_up.wav') 
+            sound_effect = pygame.mixer.Sound(constantes.musica_play) 
             pygame.mixer.Sound.play(sound_effect)
             return self.nombre.get(), self.dificultad.get()
 
     def cambia_dificultad(self):
         if self.dificultad.get() == 1:
             velocidad = 1
-            self.rb_facil['fg'] = '#B2BD08'
+            self.rb_facil['fg'] = constantes.color_tipografia
             self.rb_dificil['fg'] = 'white'
         elif self.dificultad.get() == 2:
             velocidad = 2
-            self.rb_dificil['fg'] = '#B2BD08'
+            self.rb_dificil['fg'] = constantes.color_tipografia
             self.rb_facil['fg'] = 'white'
 
     def borrar_widget_grid(self):

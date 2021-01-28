@@ -1,4 +1,7 @@
-from tkinter import *
+try:
+    from tkinter import *
+except:
+    from Tkinter import *
 import pygame
 from threading import *
 import constantes
@@ -26,9 +29,9 @@ alto_pantalla = raiz.winfo_screenheight()
 raiz.title(constantes.titulo)
 raiz.resizable(False, False)
 raiz.iconbitmap(constantes.icon)
-raiz.geometry(f'723x698+{str(int(ancho_pantalla-0.75*ancho_pantalla))}+0')
+raiz.geometry(f'723x700+{str(int(ancho_pantalla-0.75*ancho_pantalla))}+0')
 # De permitir que se modifique el tamaño de pantalla, este seria el tamaño maximo permitido
-#raiz.maxsize(1366, 698)
+#raiz.maxsize(1366, 700)
 # raiz.state("zoomed")
 raiz.config(bg='black',
             bd='20',
@@ -191,7 +194,7 @@ btn_jugar.config(bg='black',
 #btn_jugar.columnconfigure((0, columnas), weight=1)
 
 otro_frame = Canvas(raiz)
-otro_frame.config(bg='red', width=723, height=698)
+otro_frame.config(bg='red', width=723, height=700)
 
 lb_nombre_j = Label(otro_frame, text='Nombre Jugador:')
 lb_nombre_j.config(bg='black', fg='white', font=(constantes.tipografia, 12))

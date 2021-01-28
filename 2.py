@@ -43,4 +43,5 @@ button4.pack(pady=5)
 
 os.getcwd()  # Log this line.
 soundObj = pygame.mixer.Sound('audio/snake.wav')
+
 root.mainloop()

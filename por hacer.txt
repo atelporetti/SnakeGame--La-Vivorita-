@@ -1,3 +1,2 @@
 Contador tiempo cuando termine
-Sonidos
-mejorar scroll
+pantalla puntaje final

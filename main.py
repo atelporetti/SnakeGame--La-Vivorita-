@@ -6,6 +6,7 @@ import pygame
 from ventana_inicio import Inicio
 import constantes
 
+
 class Main(Tk):
     def __init__(self):
         Tk.__init__(self)
@@ -16,10 +17,11 @@ class Main(Tk):
         self.iconbitmap(constantes.icon)
         self.ancho_pantalla = self.winfo_screenwidth()
         self.alto_pantalla = self.winfo_screenheight()
-        self.geometry(f'723x698+{str(int(self.ancho_pantalla-0.75*self.ancho_pantalla))}+0')
+        self.geometry(
+            f'{str(constantes.WINDOW_WIDTH)}x{str(constantes.WINDOW_HEIGHT)}+{str(int(self.ancho_pantalla-0.75*self.ancho_pantalla))}+0')
         # De permitir que se modifique el tamaño de pantalla, este seria el tamaño maximo permitido
-        self.maxsize(1366, 698)
-        #raiz.state("zoomed")
+        self.maxsize(1366, 700)
+        # raiz.state("zoomed")
         self.config(bg='black',
                     bd='20',
                     relief='groove',
@@ -34,8 +36,9 @@ class Main(Tk):
         self._frame = nuevo_frame
         self._frame.grid(row=0, column=0)
 
+
 if __name__ == "__main__":
     pygame.init()
     root = Main()
-    root.overrideredirect(False) #deshace el marco
+    root.overrideredirect(False)  # deshace el marco
     root.mainloop()
