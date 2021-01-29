@@ -2,8 +2,7 @@ try:
     from tkinter import *
 except:
     from Tkinter import *
-import constantes
-import pygame
+import constantes, pygame
 from threading import Timer
 
 class Inicio(Frame):
@@ -95,7 +94,10 @@ class Inicio(Frame):
                         command=lambda:[self.guarda_datos()])
     
     def reproducir_musica(self):
+        pygame.mixer.pre_init(44100, -16, 2, 2048)
+        pygame.init()
         pygame.mixer.music.load(constantes.musica_inicio)
+        pygame.mixer.music.set_volume(0.4)
         pygame.mixer.music.play(-1)
 
     def msj_alerta(self, msj):
@@ -119,32 +121,30 @@ class Inicio(Frame):
         if (self.nombre.get() == '' and self.dificultad.get() == 0):
             alerta = 'Elija un nombre \nElija dificultad'
             self.msj_alerta(alerta)
-            return print(alerta)
         elif (self.nombre.get() == ''):
             alerta = 'Elija un nombre'
             self.msj_alerta(alerta)
-            return print(alerta)
         elif (self.dificultad.get() == 0):
             alerta = 'Elija la dificultad'
             self.msj_alerta(alerta)
-            return print(alerta)
         elif (self.nombre.get() and self.dificultad.get()):
             alerta = 'Comenzando...'
             self.msj_alerta(alerta)
-            t = Timer(1.0, self.borrar_widget_grid)
+            t = Timer(1.5, lambda:[self.borrar_widget_grid()]) #, pygame.quit()
             t.start()
             pygame.mixer.music.stop()
-            sound_effect = pygame.mixer.Sound(constantes.musica_play) 
+            sound_effect = pygame.mixer.Sound(constantes.musica_play)
+            sound_effect.set_volume(0.5)
             pygame.mixer.Sound.play(sound_effect)
             return self.nombre.get(), self.dificultad.get()
 
     def cambia_dificultad(self):
         if self.dificultad.get() == 1:
-            velocidad = 1
+            self.velocidad = 1
             self.rb_facil['fg'] = constantes.color_tipografia
             self.rb_dificil['fg'] = 'white'
         elif self.dificultad.get() == 2:
-            velocidad = 2
+            self.velocidad = 2
             self.rb_dificil['fg'] = constantes.color_tipografia
             self.rb_facil['fg'] = 'white'
 
@@ -152,5 +152,6 @@ class Inicio(Frame):
         self._frame.grid_remove()
         from pantalla_juego import PantallaJuego
         self.master.cambia_frame(PantallaJuego)
-        print("Ventana Inicio borrada")
-        return True
+
+    def __str__(self):
+        return f'Puntaje de {self.nombre}'

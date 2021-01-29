@@ -4,8 +4,7 @@ except:
     from Tkinter import *
 import pygame
 from ventana_inicio import Inicio
-import constantes
-
+import constantes, traceback
 
 class Main(Tk):
     def __init__(self):
@@ -36,9 +35,11 @@ class Main(Tk):
         self._frame = nuevo_frame
         self._frame.grid(row=0, column=0)
 
-
-if __name__ == "__main__":
-    pygame.init()
-    root = Main()
-    root.overrideredirect(False)  # deshace el marco
-    root.mainloop()
+try:
+    if __name__ == "__main__":
+        root = Main()
+        root.overrideredirect(False)  # deshace el marco
+        root.mainloop()
+except:
+    traceback.print_exc()
+    pygame.quit()
