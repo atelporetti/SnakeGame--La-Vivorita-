@@ -2,15 +2,16 @@ try:
     from tkinter import *
 except:
     from Tkinter import *
-import pygame
+import os, pygame, platform, traceback
 from ventana_inicio import Inicio
-import constantes, traceback
+from pantalla_juego import PantallaJuego
+import constantes
 
 class Main(Tk):
     def __init__(self):
         Tk.__init__(self)
         self._frame = None
-        self.cambia_frame(Inicio)
+        #self.cambia_frame(Inicio)
         self.title(constantes.titulo)
         self.resizable(False, False)
         self.iconbitmap(constantes.icon)
@@ -28,8 +29,8 @@ class Main(Tk):
         self.rowconfigure((0, constantes.filas), weight=1)
         self.columnconfigure((0, constantes.columnas), weight=1)
 
-    def cambia_frame(self, frame_class):
-        nuevo_frame = frame_class(self)
+    def cambia_frame(self, frame_a_cambiar):
+        nuevo_frame = frame_a_cambiar(self)
         if self._frame is not None:
             self._frame.grid_remove()
         self._frame = nuevo_frame
@@ -39,6 +40,7 @@ try:
     if __name__ == "__main__":
         root = Main()
         root.overrideredirect(False)  # deshace el marco
+        Inicio(root)
         root.mainloop()
 except:
     traceback.print_exc()

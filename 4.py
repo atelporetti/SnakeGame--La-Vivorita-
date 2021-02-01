@@ -1,5 +1,5 @@
 import pygame
-import tkinter as tk
+from tkinter import *
 from tkinter import font
 import os
 import platform
@@ -7,16 +7,11 @@ from itertools import cycle
 import traceback
 
 
-class Game:
-    def __init__(self, root):
-        self.root = root
-        embed = tk.Frame(root,
-                         width=600,
-                         height=600)
-        embed.pack(side=tk.TOP)
-        
+class Game(Tk):
+    def __init__(self):
+        Tk.__init__(self)
         # some SDL magic (don't know how and why this works tbh)
-        os.environ['SDL_WINDOWID'] = str(embed.winfo_id())
+        os.environ['SDL_WINDOWID'] = str(self.winfo_id())
         if platform.system == "Windows":
             os.environ['SDL_VIDEODRIVER'] = 'windib'
         
@@ -25,7 +20,6 @@ class Game:
         self.screen = pygame.display.set_mode((700, 720))
         self.screen.fill(pygame.Color('red'))
         self.clock = pygame.time.Clock()
-        
         # --------------------------------------------------------------
         # everything from here is optional and only for demonstration
 
@@ -40,10 +34,10 @@ class Game:
         
         # create a tk Button that changes the animation speed
         helv = font.Font(family='Helvetica', size=18, weight='bold')
-        self.button = tk.Button(root, 
+        self.button = Button(self, 
                                 text="Change speed",
                                 font=helv,
-                                command=self.change_speed).pack(side=tk.BOTTOM)
+                                command=self.change_speed).pack(side=BOTTOM)
         # ---------------------------------------------------------------
     
     def change_speed(self):
@@ -73,20 +67,22 @@ class Game:
             # update the tkinter root (I need this try except for some reason,
             # otherwise I get an error when closing the window)
             try:
-                self.root.update()
-            except tk.TclError:
+                self.update()
+            except TclError:
                 running = False   
         pygame.quit()
 
 try:
+    
     # initialise the root widget
-    root = tk.Tk()
+    root = Game()
     ancho_pantalla = root.winfo_screenwidth()
     alto_pantalla = root.winfo_screenheight()
     root.geometry(f'700x720+{str(int(ancho_pantalla-0.75*ancho_pantalla))}+0')
     # initialise and run the game
-    game = Game(root)
-    game.run()
+
+    root.run()
+    
 except Exception:
     traceback.print_exc()
     pygame.quit()

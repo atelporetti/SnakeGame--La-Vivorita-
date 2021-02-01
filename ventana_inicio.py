@@ -2,7 +2,7 @@ try:
     from tkinter import *
 except:
     from Tkinter import *
-import constantes, pygame
+import constantes, pygame, os, platform
 from threading import Timer
 
 class Inicio(Frame):
@@ -22,7 +22,9 @@ class Inicio(Frame):
         self.dificultad = IntVar()
 
         self.crear_widgets()
+        #self.configuracion_tkinter_pygame()
         self.reproducir_musica()
+        #self.inicio_pygame()
 
     def crear_widgets(self):
         self.ph_imagen_bienvenida = PhotoImage(file=constantes.imagen_fondo)
@@ -95,7 +97,7 @@ class Inicio(Frame):
     
     def reproducir_musica(self):
         pygame.mixer.pre_init(44100, -16, 2, 2048)
-        pygame.init()
+        pygame.mixer.init()
         pygame.mixer.music.load(constantes.musica_inicio)
         pygame.mixer.music.set_volume(0.4)
         pygame.mixer.music.play(-1)
@@ -112,10 +114,17 @@ class Inicio(Frame):
             self.btn_musica_on_off['text'] = 'Musica OFF'
             self.btn_musica_on_off['fg'] = 'white'
             pygame.mixer.music.unpause()
-    """
-    MUSICA DE PYGAME
-    """
         
+    def cambia_dificultad(self):
+        if self.dificultad.get() == 1:
+            self.velocidad = 1
+            self.rb_facil['fg'] = constantes.color_tipografia
+            self.rb_dificil['fg'] = 'white'
+        elif self.dificultad.get() == 2:
+            self.velocidad = 2
+            self.rb_dificil['fg'] = constantes.color_tipografia
+            self.rb_facil['fg'] = 'white'
+    
     def guarda_datos(self):
         alerta = ''
         if (self.nombre.get() == '' and self.dificultad.get() == 0):
@@ -130,7 +139,7 @@ class Inicio(Frame):
         elif (self.nombre.get() and self.dificultad.get()):
             alerta = 'Comenzando...'
             self.msj_alerta(alerta)
-            t = Timer(1.5, lambda:[self.borrar_widget_grid()]) #, pygame.quit()
+            t = Timer(1.5, lambda:[self.borrar_widget_grid(), self.invisibilizar(), self.configuracion_tkinter_pygame(), self.inicio_pygame()]) #, self.inicio_pygame()
             t.start()
             pygame.mixer.music.stop()
             sound_effect = pygame.mixer.Sound(constantes.musica_play)
@@ -138,20 +147,21 @@ class Inicio(Frame):
             pygame.mixer.Sound.play(sound_effect)
             return self.nombre.get(), self.dificultad.get()
 
-    def cambia_dificultad(self):
-        if self.dificultad.get() == 1:
-            self.velocidad = 1
-            self.rb_facil['fg'] = constantes.color_tipografia
-            self.rb_dificil['fg'] = 'white'
-        elif self.dificultad.get() == 2:
-            self.velocidad = 2
-            self.rb_dificil['fg'] = constantes.color_tipografia
-            self.rb_facil['fg'] = 'white'
-
     def borrar_widget_grid(self):
         self._frame.grid_remove()
-        from pantalla_juego import PantallaJuego
-        self.master.cambia_frame(PantallaJuego)
+        #from pantalla_juego import PantallaJuego
+        #self.master.cambia_frame(PantallaJuego)
 
-    def __str__(self):
-        return f'Puntaje de {self.nombre}'
+    def configuracion_tkinter_pygame(self):
+        os.environ['SDL_WINDOWID'] = str(self.winfo_id())
+        if platform.system == "Windows":
+            os.environ['SDL_VIDEODRIVER'] = 'windib'
+
+    def inicio_pygame(self):
+        pygame.init()
+        pygame.display.set_mode((700, 720))
+        pygame.display.set_mode((1,1))
+        self.clock = pygame.time.Clock()
+    
+    def invisibilizar(self):
+        self.master.withdraw()    

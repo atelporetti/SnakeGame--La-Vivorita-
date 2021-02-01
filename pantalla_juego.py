@@ -3,10 +3,11 @@ try:
 except:
     from Tkinter import *
 from ventana_inicio import Inicio
-import constantes, ventana_inicio, pygame
+import constantes, ventana_inicio, pygame, os, platform
+
 class PantallaJuego(Frame):
-    def __init__(self, master, *args, **kwargs):
-        Frame.__init__(self, master, *args, **kwargs)
+    def __init__(self, master):
+        Frame.__init__(self, master)
         #Frame.configure(self,bg='blue', width=800, height=800)
         self.master = master
         self.config(background='yellow', width=constantes.WINDOW_WIDTH, height=constantes.WINDOW_HEIGHT)  # tcross, cross, dotbox
@@ -15,8 +16,7 @@ class PantallaJuego(Frame):
         self.nivel = 0
         self.rowconfigure((0, constantes.filas), weight=1)
         self.columnconfigure((0, constantes.columnas), weight=1)
-
-        self.nombre =  ventana_inicio.Inicio
+        self.nombre = ''
         self.lb_nombre_jugador = Entry(self, textvariable=self.nombre)
         self.lb_nombre_jugador.grid(row=0, column=0)
         self.lb_nombre = Label(self, text=f'Puntaje de : {self.lb_nombre_jugador}. Nivel: {self.nivel}', font=(constantes.tipografia, 6, "bold"))
@@ -31,7 +31,16 @@ class PantallaJuego(Frame):
         self._canvas.grid(row=2, column=0, sticky='nsew') #
         self.label = Label(self._canvas, text=f'Puntaje de : {self.nombre}', font=(constantes.tipografia, 6, "bold")).grid(row=1, column=0, padx=10, pady=10)
         
-        # itialize a pygame display
+        # ------------- SE SALE LA PANTALLA
+        self.configuracion_tkinter_pygame()
+        #self.inicio_pygame()
+
+    def configuracion_tkinter_pygame(self):
+        os.environ['SDL_WINDOWID'] = str(self.winfo_id())
+        if platform.system == "Windows":
+            os.environ['SDL_VIDEODRIVER'] = 'windib'
+
+    def inicio_pygame(self):
         pygame.init()
         self.screen = pygame.display.set_mode((700, 720))
         self.screen.fill(pygame.Color('red'))
