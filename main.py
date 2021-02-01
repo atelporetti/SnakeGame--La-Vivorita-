@@ -19,9 +19,6 @@ class Main(Tk):
         self.alto_pantalla = self.winfo_screenheight()
         self.geometry(
             f'{str(constantes.WINDOW_WIDTH)}x{str(constantes.WINDOW_HEIGHT)}+{str(int(self.ancho_pantalla-0.75*self.ancho_pantalla))}+0')
-        # De permitir que se modifique el tamaño de pantalla, este seria el tamaño maximo permitido
-        self.maxsize(1366, 700)
-        # raiz.state("zoomed")
         self.config(bg='black',
                     bd='20',
                     relief='groove',
