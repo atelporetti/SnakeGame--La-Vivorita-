@@ -6,7 +6,11 @@ _Clasico juego de La Vivorita_
 _Instalar las fuentes ubicadas dentro de la carpeta 'fonts'_
 
 _Instalar pygame_
+
       python3 -m pip install -U pygame --user
+o si no funciona:
+
+      pip pygame install
 
 ## Construido con 🛠️
 
