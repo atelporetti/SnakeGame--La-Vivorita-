@@ -4,15 +4,14 @@ except:
     from Tkinter import *
 import constantes
 import random
-master = Tk()
 
 class Bloque():
     x = 0
     y = 0
     color = ''
-    grosor = 1
-    def __init__(self, master, color, x, y):
-        self.master = master
+    grosor = constantes.CELL_SIZE
+
+    def __init__(self, color, x, y):
         self.color = color
         self.x = x
         self.y = y
@@ -23,25 +22,12 @@ class Bloque():
         return x, y
 
 class Vivorita(Bloque):
-    def __init__(self, master, color, x, y):
-        Bloque.__init__(self, master, color, x, y)
+    def __init__(self, master, color, color_cabeza, x, y):
+        Bloque.__init__(self, color, x, y)
         self.master = master
-        self.cabeza_coordenadas = set([(X, Y)])
-        self.color = color
+        self.cabeza_coordenadas = [()]
+        self.cuerpo_coords = [()]
+        self.color_cabeza = color_cabeza
+        self.color_cuerpo = color
         self.velocidad_X = 1
         self.velocidad_Y = 1
-        self.cola = []
-        self.block_coords = set([(x, y)])
-
-canvas_width = 440
-canvas_height = 440
-w = Canvas(master, 
-           width=canvas_width,
-           height=canvas_height)
-w.pack()
-
-y = int(canvas_height / 2)
-w.create_line(0, y, canvas_width, y, fill="#476042")
-w.create_rectangle()
-
-mainloop()

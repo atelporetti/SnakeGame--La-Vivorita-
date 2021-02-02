@@ -26,15 +26,22 @@ LEFT = 'left'
 RIGHT = 'right'
 #---------------------------------
 
-imagen_fondo = 'Assets/img/snakeWelcome658x288.png'
-icon = 'Assets/img/snake.ico'
+#------------ IMAGES ------------
+imagen_fondo = 'Assets/img/snake_welcome658x288.png'
+icon = 'Assets/img/snake_icon.ico'
 titulo = 'La Vivorita: el juego'
 tipografia = '8-bit pusab'
+cabeza_serpiente = 'Assets/img/snake_head.png'
+cuerpo_serpiente = 'Assets/img/snake_body.png'
+#---------------------------------
+
+#------------ COLORS ------------
 color_tipografia = '#B2BD08'
 color_cabeza = '#B2BD08'
-color_cola = '#B2BD59'
+color_cuerpo = '#B2BD59'
 color_obstaculo = '#B22B00'
 color_fondo = 'black'
+#---------------------------------
 
 #------------- MUSIC -------------
 musica_inicio = 'Assets/audio/inicio.wav'
@@ -42,6 +49,8 @@ musica_en_juego = 'Assets/audio/en_movimiento.wav'
 musica_fin = 'Assets/audio/game_over.wav'
 musica_play = 'Assets/audio/power_up.wav'
 #---------------------------------
+
+
 # shapes
 snake_factor = 1
 obstacle_factor = 0.9
@@ -56,13 +65,9 @@ snake = {
     "color": "white",
 }
 
-# constants for keyboard input
 direction_vectors = {
     "Up": (0, -1),
     "Down": (0, 1),
     "Left": (-1, 0),
     "Right": (1, 0),
 }
-
-# refresh time for the perpetual motion
-refresh_ms = 100

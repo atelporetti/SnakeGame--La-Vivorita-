@@ -12,6 +12,7 @@ import constantes
 
 
 class Main(Tk):
+
     def __init__(self):
         Tk.__init__(self)
         self._frame = None
@@ -26,9 +27,12 @@ class Main(Tk):
                     bd='20',
                     relief='groove',
                     cursor='tcross')
+        self.call("tk", "scaling", 1.0)
         self.overrideredirect(False)  # deshace el marco
         self.rowconfigure((0, constantes.filas), weight=1)
         self.columnconfigure((0, constantes.columnas), weight=1)
+        self.nombre = ''
+        self.velocidad = ''
         
 
     def cambia_frame(self, frame_a_cambiar, master):

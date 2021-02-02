@@ -4,6 +4,7 @@ except:
     from Tkinter import *
 from ventana_inicio import Inicio
 import constantes, ventana_inicio, pygame, os, platform
+from vivorita import Vivorita
 
 class PantallaJuego(Frame):
     def __init__(self, master):
@@ -12,31 +13,42 @@ class PantallaJuego(Frame):
         self.master = master
         self._frame = Frame(master)
         self.config(background='yellow', width=constantes.WINDOW_WIDTH, height=constantes.WINDOW_HEIGHT)  # tcross, cross, dotbox
-        self.grid(sticky='nsew')
-        self.puntaje = 0
+        self.grid(row=0, column=0, sticky='nsew')
+        self.puntaje = 10
         self.nivel = 0
-        self.rowconfigure((0, constantes.filas), weight=1)
-        self.columnconfigure((0, constantes.columnas), weight=1)
+        self.nombre = 'Pepito'
+        self.velocidad = '10'
+        #self.rowconfigure((0, 1), weight=1)
+        self.columnconfigure((0, 1), weight=1)
         self.nombre = ''
-        self.lb_nombre_jugador = Entry(self, textvariable=self.nombre)
-        self.lb_nombre_jugador.grid(row=0, column=0)
-        self.lb_nombre = Label(self, text=f'Puntaje de : {self.lb_nombre_jugador}. Nivel: {self.nivel}', font=(constantes.tipografia, 6, "bold"))
-        self.lb_nombre.grid(row=0, column=1, padx=10, pady=10)
-        self.label = Label(self, text=f'Puntaje de : {self.nombre}', font=(constantes.tipografia, 6, "bold"))
-        self.label.grid(row=1, column=0, padx=10, pady=10)
-        self.button = Button(self, text="Volver a jugar",command=lambda:[self.master.cambia_frame(Inicio, self.master), ], font=(constantes.tipografia, 6, "bold"))
-        self.button.grid(row=1, column=1, padx=10, pady=10)
+        self.lb_nombre = Label(self, text=f'Puntaje de {self.nombre}: {self.puntaje}. Nivel: {self.nivel}', font=(constantes.tipografia, 6, "bold"))
+        self.lb_nombre.grid(row=0, column=0, padx=0, pady=0)
+        self.lb_nombre.config(bg=constantes.color_fondo, fg='white',
+                            justify='left',
+                            font=(constantes.tipografia, 12))
+        self.button = Button(self, text="Volver a jugar",command=lambda:[self.master.cambia_frame(Inicio, self.master)], font=(constantes.tipografia, 6, "bold"))
+        self.button.grid(row=0, column=1, sticky='nsew',padx=0, pady=0)
+        self.button.config(bg=constantes.color_fondo, fg='white',
+                            justify='left',
+                            font=(constantes.tipografia, 12))
 
+        # ------------------------------
         self._canvas = Canvas(self)
-        self._canvas.config(bg='blue', width=constantes.WINDOW_WIDTH, height=(constantes.WINDOW_HEIGHT))
-        self._canvas.grid(row=2, column=0, sticky='nsew') #
-        self.label = Label(self._canvas, text=f'Puntaje de : {self.nombre}', font=(constantes.tipografia, 6, "bold")).grid(row=1, column=0, padx=10, pady=10)
-        
-        self.board=Canvas(self, width=constantes.WINDOW_WIDTH, height=constantes.WINDOW_HEIGHT, background=constantes.color_fondo)
-        self.board.grid()
-        self.snake=self.board.create_rectangle(1,1,11,11,fill=constantes.color_cabeza)
+        self._canvas.config(bg='blue',width=constantes.WINDOW_WIDTH, height=constantes.WINDOW_HEIGHT, highlightthickness=0)
+        self._canvas.grid(row=1, column=0, columnspan=2,sticky='nsew')
+        self._canvas.create_rectangle(360, 360, 380, 380, fill=constantes.color_cabeza)
+                
         self.configuracion_tkinter_pygame()
         self.reproducir_musica()
+
+        self.cargar_imagenes()
+
+    def cargar_imagenes(self):
+        self.cabeza = PhotoImage(file=constantes.cabeza_serpiente)
+        self._canvas.create_image(350, 350, image=self.cabeza)
+        #self.snake = Vivorita(self._canvas, constantes.color_cuerpo, constantes.color_cabeza, 360, 360)
+        #self.snake.grosor
+        #self.snake.block_coords
 
     #Por si hiciera falta
     def configuracion_tkinter_pygame(self):
