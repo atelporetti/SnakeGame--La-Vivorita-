@@ -1,6 +1,8 @@
 # SnakeGame--La-Vivorita-
 _Clasico juego de La Vivorita_
 
+En este juego, el jugador utiliza las teclas de flecha para mover una "serpiente" alrededor del tablero. A medida que la serpiente encuentra comida, se la come, y así crece. El juego termina cuando la serpiente sale de la pantalla o se mueve hacia sí misma. El objetivo es hacer que la serpiente sea lo más grande posible antes de que eso ocurra.
+
 ### Instalación 🔧
 
 _1. Instalar las fuentes ubicadas dentro de la carpeta 'fonts'_
