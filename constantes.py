@@ -34,9 +34,12 @@ color_tipografia = '#B2BD08'
 color_cabeza = '#B2BD08'
 color_cola = '#B2BD59'
 color_obstaculo = '#B22B00'
+color_fondo = 'black'
 
 #------------- MUSIC -------------
 musica_inicio = 'Assets/audio/inicio.wav'
+musica_en_juego = 'Assets/audio/en_movimiento.wav'
+musica_fin = 'Assets/audio/game_over.wav'
 musica_play = 'Assets/audio/power_up.wav'
 #---------------------------------
 # shapes

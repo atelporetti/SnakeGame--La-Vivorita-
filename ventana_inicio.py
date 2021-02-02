@@ -21,10 +21,8 @@ class Inicio(Frame):
         self.velocidad = IntVar()
         self.dificultad = IntVar()
 
-        self.crear_widgets()
-        #self.configuracion_tkinter_pygame()
         self.reproducir_musica()
-        #self.inicio_pygame()
+        self.crear_widgets()
 
     def crear_widgets(self):
         self.ph_imagen_bienvenida = PhotoImage(file=constantes.imagen_fondo)
@@ -96,6 +94,8 @@ class Inicio(Frame):
                         command=lambda:[self.guarda_datos()])
     
     def reproducir_musica(self):
+        if pygame.get_init() is not True:
+            pass
         pygame.mixer.pre_init(44100, -16, 2, 2048)
         pygame.mixer.init()
         pygame.mixer.music.load(constantes.musica_inicio)
@@ -139,7 +139,7 @@ class Inicio(Frame):
         elif (self.nombre.get() and self.dificultad.get()):
             alerta = 'Comenzando...'
             self.msj_alerta(alerta)
-            t = Timer(1.5, lambda:[self.borrar_widget_grid(), self.invisibilizar(), self.configuracion_tkinter_pygame(), self.inicio_pygame()]) #, self.inicio_pygame()
+            t = Timer(1.5, lambda:[self.borrar_widget_grid()]) #, self.inicio_pygame()
             t.start()
             pygame.mixer.music.stop()
             sound_effect = pygame.mixer.Sound(constantes.musica_play)
@@ -149,19 +149,8 @@ class Inicio(Frame):
 
     def borrar_widget_grid(self):
         self._frame.grid_remove()
-        #from pantalla_juego import PantallaJuego
-        #self.master.cambia_frame(PantallaJuego)
-
-    def configuracion_tkinter_pygame(self):
-        os.environ['SDL_WINDOWID'] = str(self.winfo_id())
-        if platform.system == "Windows":
-            os.environ['SDL_VIDEODRIVER'] = 'windib'
-
-    def inicio_pygame(self):
-        pygame.init()
-        pygame.display.set_mode((700, 720))
-        pygame.display.set_mode((1,1))
-        self.clock = pygame.time.Clock()
+        from pantalla_juego import PantallaJuego
+        self.master.cambia_frame(PantallaJuego, self.master)
     
     def invisibilizar(self):
         self.master.withdraw()    
