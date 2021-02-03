@@ -39,7 +39,7 @@ class VivoritaPantalla(Canvas, Bloque):
         self.color_cuerpo = constantes.color_cuerpo
         self.velocidad_X = 1
         self.velocidad_Y = 1
-        self.direcciones_posibles = ('Left', 'Right', 'Up', 'Down')
+        self.direcciones_posibles = constantes.DIRECCIONES_FLECHAS
         self.direccion = random.choice(self.direcciones_posibles)
         self.bind_all('<Key>', self.presiona_tecla)
 

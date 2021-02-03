@@ -24,6 +24,7 @@ CELL_CANVA_HEIGHT = int(CANVA_HEIGHT / CELL_SIZE)
 #---------------------------------
 
 #------- COMMANDS KEYBOARD -------
+DIRECCIONES_FLECHAS = ('Left', 'Right', 'Up', 'Down')
 UP = 'up'
 DOWN = 'down'
 LEFT = 'left'
