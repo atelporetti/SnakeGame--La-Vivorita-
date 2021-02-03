@@ -31,8 +31,10 @@ class Main(Tk):
         self.overrideredirect(False)  # deshace el marco
         self.rowconfigure((0, constantes.filas), weight=1)
         self.columnconfigure((0, constantes.columnas), weight=1)
-        self.nombre = ''
-        self.velocidad = ''
+        
+        #self.nombre = StringVar()
+        #self.velocidad = IntVar()
+        #self.dificultad = IntVar()
         
 
     def cambia_frame(self, frame_a_cambiar, master):

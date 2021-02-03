@@ -16,11 +16,17 @@ class PantallaJuego(Frame):
         self.grid(row=0, column=0, sticky='nsew')
         self.puntaje = 10
         self.nivel = 0
-        self.nombre = 'Pepito'
-        self.velocidad = '10'
         #self.rowconfigure((0, 1), weight=1)
         self.columnconfigure((0, 1), weight=1)
-        self.nombre = ''
+
+        #self.controller = controller
+        #self.nombre = controller.nombre
+        #self.velocidad = controller.velocidad
+        #self.dificultad = controller.dificultad
+        self.nombre = StringVar()
+        self.velocidad = IntVar()
+        self.dificultad = IntVar()
+
         self.lb_nombre = Label(self, text=f'Puntaje de {self.nombre}: {self.puntaje}. Nivel: {self.nivel}', font=(constantes.tipografia, 6, "bold"))
         self.lb_nombre.grid(row=0, column=0, padx=0, pady=0)
         self.lb_nombre.config(bg=constantes.color_fondo, fg='white',
@@ -33,19 +39,13 @@ class PantallaJuego(Frame):
                             font=(constantes.tipografia, 12))
 
         # ------------------------------
-        self._canvas = Canvas(self)
-        self._canvas.config(bg='blue',width=constantes.WINDOW_WIDTH, height=constantes.WINDOW_HEIGHT, highlightthickness=0)
-        self._canvas.grid(row=1, column=0, columnspan=2,sticky='nsew')
-        self._canvas.create_rectangle(360, 360, 380, 380, fill=constantes.color_cabeza)
+        self.vivora = Vivorita(self)
+        #self._canvas.create_rectangle(360, 360, 380, 380, fill=constantes.color_cabeza)
                 
         self.configuracion_tkinter_pygame()
         self.reproducir_musica()
 
-        self.cargar_imagenes()
 
-    def cargar_imagenes(self):
-        self.cabeza = PhotoImage(file=constantes.cabeza_serpiente)
-        self._canvas.create_image(350, 350, image=self.cabeza)
         #self.snake = Vivorita(self._canvas, constantes.color_cuerpo, constantes.color_cabeza, 360, 360)
         #self.snake.grosor
         #self.snake.block_coords

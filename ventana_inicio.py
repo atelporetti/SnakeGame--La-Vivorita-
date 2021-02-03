@@ -17,6 +17,10 @@ class Inicio(Frame):
         self.rowconfigure((0, constantes.filas), weight=1)
         self.columnconfigure((0, constantes.columnas), weight=1)
 
+        #self.controller = controller
+        #self.nombre = controller.nombre
+        #self.velocidad = controller.velocidad
+        #self.dificultad = controller.dificultad
         self.nombre = StringVar()
         self.velocidad = IntVar()
         self.dificultad = IntVar()

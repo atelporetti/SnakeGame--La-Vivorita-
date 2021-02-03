@@ -31,8 +31,8 @@ imagen_fondo = 'Assets/img/snake_welcome658x288.png'
 icon = 'Assets/img/snake_icon.ico'
 titulo = 'La Vivorita: el juego'
 tipografia = '8-bit pusab'
-cabeza_serpiente = 'Assets/img/snake_head.png'
-cuerpo_serpiente = 'Assets/img/snake_body.png'
+cabeza_serpiente = 'Assets/img/snake_head.png' #snake_head2_20x20
+cuerpo_serpiente = 'Assets/img/snake_body.png' #snake_body_20x20
 #---------------------------------
 
 #------------ COLORS ------------
