@@ -29,20 +29,20 @@ class Main(Tk):
                     cursor='tcross')
         self.call("tk", "scaling", 1.0)
         self.overrideredirect(False)  # deshace el marco
-        self.rowconfigure((0, constantes.filas), weight=1)
-        self.columnconfigure((0, constantes.columnas), weight=1)
-        
+        self.rowconfigure((0, 1), weight=0)
+        self.columnconfigure((0, 1), weight=0)
+
         #self.nombre = StringVar()
         #self.velocidad = IntVar()
         #self.dificultad = IntVar()
-        
 
     def cambia_frame(self, frame_a_cambiar, master):
         nuevo_frame = frame_a_cambiar(master)
-        if self._frame is not None: # si no es la primera vez que inicia el programa
+        if self._frame is not None:  # si no es la primera vez que inicia el programa
             self._frame.grid_remove()
         self._frame = nuevo_frame
         self._frame.grid(row=0, column=0)
+
 
 try:
     if __name__ == "__main__":

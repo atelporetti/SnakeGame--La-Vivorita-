@@ -33,6 +33,7 @@ titulo = 'La Vivorita: el juego'
 tipografia = '8-bit pusab'
 cabeza_serpiente = 'Assets/img/snake_head.png' #snake_head2_20x20
 cuerpo_serpiente = 'Assets/img/snake_body.png' #snake_body_20x20
+comida = 'Assets/img/comida.png'
 #---------------------------------
 
 #------------ COLORS ------------
