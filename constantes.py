@@ -8,7 +8,7 @@ grid = {
 
 }
 filas = 5
-columnas = 2
+columnas = 1
 #------------ SCREEN -------------
 WINDOW_HEIGHT = 700
 WINDOW_WIDTH = 720
@@ -17,6 +17,8 @@ assert WINDOW_HEIGHT % CELL_SIZE == 0, 'El tamaño de la celda debe ser siempre 
 assert WINDOW_WIDTH % CELL_SIZE == 0, 'El tamaño de la celda debe ser siempre multiplo del ancho de la ventana.'
 CELL_HEIGHT = int(WINDOW_HEIGHT / CELL_SIZE)
 CELL_WIDTH = int(WINDOW_WIDTH / CELL_SIZE)
+CANVA_HEIGHT = 618
+CANVA_WIDTH = 680
 #---------------------------------
 
 #------- COMMANDS KEYBOARD -------
@@ -51,6 +53,10 @@ musica_fin = 'Assets/audio/game_over.wav'
 musica_play = 'Assets/audio/power_up.wav'
 #---------------------------------
 
+#------------- SNAKE -------------
+VELOCIDAD = 20
+INTERVALO_TIEMPO_MS = 100
+#---------------------------------
 
 # shapes
 snake_factor = 1
@@ -67,8 +73,8 @@ snake = {
 }
 
 direction_vectors = {
-    "Up": (0, -1),
-    "Down": (0, 1),
-    "Left": (-1, 0),
-    "Right": (1, 0),
+    "Arriba": (0, -1),
+    "Abajo": (0, 1),
+    "Izquierda": (-1, 0),
+    "Derecha": (1, 0),
 }

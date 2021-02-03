@@ -27,7 +27,7 @@ class Main(Tk):
                     bd='20',
                     relief='groove',
                     cursor='tcross')
-        self.call("tk", "scaling", 1.0)
+        self.call("tk", "scaling", 1)
         self.overrideredirect(False)  # deshace el marco
         self.rowconfigure((0, 1), weight=0)
         self.columnconfigure((0, 1), weight=0)

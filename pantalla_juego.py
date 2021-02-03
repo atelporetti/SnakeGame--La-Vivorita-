@@ -4,7 +4,7 @@ except:
     from Tkinter import *
 from ventana_inicio import Inicio
 import constantes, ventana_inicio, pygame, os, platform
-from vivorita import Vivorita
+from vivorita import Vivorita, VivoritaPantalla
 
 class PantallaJuego(Frame):
     def __init__(self, master):
@@ -39,7 +39,7 @@ class PantallaJuego(Frame):
                             font=(constantes.tipografia, 12))
 
         # ------------------------------
-        self.vivora = Vivorita(self)
+        self.vivora = VivoritaPantalla(self)
         #self._canvas.create_rectangle(360, 360, 380, 380, fill=constantes.color_cabeza)
                 
         self.configuracion_tkinter_pygame()

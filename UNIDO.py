@@ -39,7 +39,7 @@ raiz.config(bg='black',
             cursor='tcross')
 raiz.rowconfigure((0, filas), weight=1)
 raiz.columnconfigure((0, columnas), weight=1)
-
+#raiz.call("tk", "scaling", 1.0)
 # -------------- IMAGEN---------------
 ph_imagen_bienvenida = PhotoImage(file=constantes.imagen_fondo)
 # Para ajustar la imagen
@@ -97,8 +97,8 @@ def msj_alerta(msj):
 # -------------- MUSICA---------------
 #sound_effect = pygame.mixer.Sound('audio/snake.wav') 
 #pygame.mixer.Sound.play(sound_effect)
-pygame.mixer.music.load('audio/inicio.wav')
-pygame.mixer.music.play(-1)
+#pygame.mixer.music.load('audio/inicio.wav')
+#pygame.mixer.music.play(-1)
 # ------------------------------------
 
 txt_musica_on_off = 'Musica OFF'
@@ -108,11 +108,11 @@ def cambio_musica():
     if btn_musica_on_off['text'] == 'Musica OFF':
         btn_musica_on_off['text'] = 'Musica ON'
         btn_musica_on_off['fg'] = '#B2BD08'
-        pygame.mixer.music.pause()
+        #pygame.mixer.music.pause()
     elif btn_musica_on_off['text'] == 'Musica ON':
         btn_musica_on_off['text'] = 'Musica OFF'
         btn_musica_on_off['fg'] = 'white'
-        pygame.mixer.music.unpause()
+        #pygame.mixer.music.unpause()
 
 
 btn_musica_on_off = Button(
