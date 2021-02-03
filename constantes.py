@@ -10,15 +10,17 @@ grid = {
 filas = 5
 columnas = 1
 #------------ SCREEN -------------
-WINDOW_HEIGHT = 700
 WINDOW_WIDTH = 720
+WINDOW_HEIGHT = 700
 CELL_SIZE = 20
-assert WINDOW_HEIGHT % CELL_SIZE == 0, 'El tamaño de la celda debe ser siempre multiplo del alto de la ventana'
 assert WINDOW_WIDTH % CELL_SIZE == 0, 'El tamaño de la celda debe ser siempre multiplo del ancho de la ventana.'
-CELL_HEIGHT = int(WINDOW_HEIGHT / CELL_SIZE)
+assert WINDOW_HEIGHT % CELL_SIZE == 0, 'El tamaño de la celda debe ser siempre multiplo del alto de la ventana'
 CELL_WIDTH = int(WINDOW_WIDTH / CELL_SIZE)
-CANVA_HEIGHT = 618
+CELL_HEIGHT = int(WINDOW_HEIGHT / CELL_SIZE)
 CANVA_WIDTH = 680
+CANVA_HEIGHT = 620
+CELL_CANVA_WIDTH = int(CANVA_WIDTH / CELL_SIZE)
+CELL_CANVA_HEIGHT = int(CANVA_HEIGHT / CELL_SIZE)
 #---------------------------------
 
 #------- COMMANDS KEYBOARD -------
@@ -36,6 +38,7 @@ tipografia = '8-bit pusab'
 cabeza_serpiente = 'Assets/img/snake_head.png' #snake_head2_20x20
 cuerpo_serpiente = 'Assets/img/snake_body.png' #snake_body_20x20
 comida = 'Assets/img/comida.png'
+hueco = 'Assets/img/hueco.png'
 #---------------------------------
 
 #------------ COLORS ------------

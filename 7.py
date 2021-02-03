@@ -1,16 +1,12 @@
-comida_coordenadas = (290, 350)
-cabeza_coordenadas = [(350, 350), (330, 350)]
-cuerpo_coordenadas = [(290, 370), (330, 350), comida_coordenadas]
-""" while True:
-            if not comida_coordenadas in (cabeza_coordenadas and cuerpo_coordenadas):
-                for coordenada_X, coordenada_Y in comida_coordenadas:
-                    print('hola')
-                    break """
+cuerpo_coordenadas = [(0, 680), (300, 300)]
+print(cuerpo_coordenadas)
 
-print(cuerpo_coordenadas[:-1])
-x, y = comida_coordenadas
-print(f'La ex es: {x} y la y es: {y}')
-
-nuevo = [(4, 5)] + cabeza_coordenadas
-print(nuevo)
-print(cuerpo_coordenadas[1:])
+coordenada_X, coordenada_Y = cuerpo_coordenadas[0]
+coords = (coordenada_X, coordenada_Y)
+print(cuerpo_coordenadas[0])
+print(coordenada_X, coordenada_Y)
+print(coords)
+if not coordenada_X in (0, 680) and not coordenada_Y in (0, 620):
+    print('no toco los limites')
+else:
+    print('toco los limites')

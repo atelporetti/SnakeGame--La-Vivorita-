@@ -33,8 +33,8 @@ class VivoritaPantalla(Canvas, Bloque):
         self.grid(row=1, column=0, columnspan=2)
 
         self.puntaje = 0
-        self.cuerpo_coordenadas = [(350, 350), (330, 350)]
-        self.comida_coordenadas = (310, 350) #self.coordenadas_aleatorias()
+        self.cuerpo_coordenadas = [(300, 300), (300, 300)]
+        self.comida_coordenadas = self.genera_comida_aleatoria()
         self.color_cabeza = constantes.color_cabeza
         self.color_cuerpo = constantes.color_cuerpo
         self.velocidad_X = 1
@@ -44,9 +44,9 @@ class VivoritaPantalla(Canvas, Bloque):
         self.bind_all('<Key>', self.presiona_tecla)
 
         self.cargar_imagenes_cuerpo_cabeza()
+        self.cargar_bordes()
         self.cargar_vivorita()
         self.cargar_comida()
-        self.cargar_bordes()
         self.mover_vivorita()
         self.after(constantes.INTERVALO_TIEMPO_MS, self.realizar_acciones)
 
@@ -59,11 +59,13 @@ class VivoritaPantalla(Canvas, Bloque):
         #
 
         self.cabeza = PhotoImage(file=constantes.cabeza_serpiente)
-        self.create_image(110, 350, image=self.cabeza, tag='bloque_cabeza')
+        self.create_image(-10, -10, image=self.cabeza, tag='bloque_cabeza')
         self.cuerpo = PhotoImage(file=constantes.cuerpo_serpiente)
-        self.create_image(130, 350, image=self.cuerpo, tag='bloque_cuerpo')
+        self.create_image(-10, -10, image=self.cuerpo, tag='bloque_cuerpo')
         self.comida = PhotoImage(file=constantes.comida)
-        self.create_image(210, 350, image=self.comida, tag='bloque_comida')
+        self.create_image(-10, -10, image=self.comida, tag='bloque_comida')
+        self.hueco = PhotoImage(file=constantes.comida)
+        self.create_image(-10, -10, image=self.hueco, tag='bloque_hueco')
 
     def cargar_bordes(self):
         self.create_rectangle(5,5,constantes.CANVA_WIDTH-5,constantes.CANVA_HEIGHT-5, outline=constantes.color_cuerpo)
@@ -78,31 +80,31 @@ class VivoritaPantalla(Canvas, Bloque):
     def mover_vivorita(self):
         coordenada_X, coordenada_Y = self.cuerpo_coordenadas[0]
         if self.direccion == 'Right':
-            nueva_coordenada = (coordenada_X + constantes.VELOCIDAD, coordenada_Y) # + constantes.VELOCIDAD
+            nueva_coordenada_cabeza = (coordenada_X + constantes.VELOCIDAD, coordenada_Y) # + constantes.VELOCIDAD
         elif self.direccion == 'Left':
-            nueva_coordenada = (coordenada_X - constantes.VELOCIDAD, coordenada_Y) # + constantes.VELOCIDAD
+            nueva_coordenada_cabeza = (coordenada_X - constantes.VELOCIDAD, coordenada_Y) # + constantes.VELOCIDAD
         elif self.direccion == 'Up':
-            nueva_coordenada = (coordenada_X, coordenada_Y - constantes.VELOCIDAD) # + constantes.VELOCIDAD
+            nueva_coordenada_cabeza = (coordenada_X, coordenada_Y - constantes.VELOCIDAD) # + constantes.VELOCIDAD
         elif self.direccion == 'Down':
-            nueva_coordenada = (coordenada_X, coordenada_Y + constantes.VELOCIDAD) # + constantes.VELOCIDAD
+            nueva_coordenada_cabeza = (coordenada_X, coordenada_Y + constantes.VELOCIDAD) # + constantes.VELOCIDAD
         # Agrega la primera posicion de la 
-        self.cuerpo_coordenadas = [nueva_coordenada] + self.cuerpo_coordenadas[:-1]
+        self.cuerpo_coordenadas = [nueva_coordenada_cabeza] + self.cuerpo_coordenadas[:-1]
         # Empareza las imagenes de los segmentos del cuerpo con las nuevas coordenadas, por pares
         for segmento, coordenada in zip(self.find_withtag('cuerpo'), self.cuerpo_coordenadas):
             self.coords(segmento, coordenada)
     
     def realizar_acciones(self):
         if self.comprobar_colisiones():
+            print('Fin del juego!')
             return
-        elif self.colisiona_comida():
-            self.puntaje += 1
+        self.colisiona_comida()
         self.mover_vivorita()
         self.after(constantes.INTERVALO_TIEMPO_MS, self.realizar_acciones)
 
     def comprobar_colisiones(self):
         coordenada_X, coordenada_Y = self.cuerpo_coordenadas[0]
-        # True si se cumplen algunas de las dos condiciones: choque contra las paredes o contra su cuerpo
-        return(coordenada_X in (0, constantes.CANVA_WIDTH) or coordenada_Y in (20, constantes.CANVA_HEIGHT)
+        # True si se cumplen algunas de las dos condiciones: choque contra las paredes (dos valores, inferior y superior o izquierdo y derecho) o contra su cuerpo
+        return(coordenada_X in (0, constantes.CANVA_WIDTH) or coordenada_Y in (0, constantes.CANVA_HEIGHT)
         or (coordenada_X, coordenada_Y) in self.cuerpo_coordenadas[1:])
 
     def presiona_tecla(self, evento):
@@ -114,10 +116,26 @@ class VivoritaPantalla(Canvas, Bloque):
             self.direccion = nueva_direccion
 
     def colisiona_comida(self):
-        if self.comida_coordenadas in self.cuerpo_coordenadas[0]:
+        if self.comida_coordenadas == self.cuerpo_coordenadas[0]:
             self.puntaje += 1
-            self.cuerpo_coordenadas.append(self.cuerpo_coordenadas[-1])
+            # Agrega la cola de la serpiente una vez, que luego sera quitada con la funcion mover_vivorita()
+            self.cuerpo_coordenadas.append(self.comida_coordenadas)
+            self.comida_coordenadas = self.genera_comida_aleatoria()
+            self.coords(self.find_withtag('comida'), *self.comida_coordenadas)
+            # Crea un bloque en la ultima posicion de la vivorita
+            #self.create_image(*self.cuerpo_coordenadas[-1], image=self.cuerpo, tag='bloque_cuerpo')
+            # Actualiza el puntaje
+            puntaje = self.find_withtag('score')
+            self.itemconfigure(puntaje, text=f'Score: {self.puntaje}', tag='score')
 
+    def genera_comida_aleatoria(self):
+            while True:
+                # Se les resta 1 para que no queden ubicadas en el borde del mapa y se considere perdido el juego
+                coordenada_X = random.randint(1, constantes.CELL_CANVA_WIDTH-1) * constantes.CELL_SIZE
+                coordenada_Y = random.randint(1, constantes.CELL_CANVA_HEIGHT-1) * constantes.CELL_SIZE
+                coordenadas_comida = (coordenada_X, coordenada_Y)
+                if (coordenadas_comida not in self.cuerpo_coordenadas): #or (not coordenada_X in (0, constantes.CANVA_WIDTH) and not coordenada_Y in (0, constantes.CANVA_HEIGHT))
+                    return coordenadas_comida
 
 
 
