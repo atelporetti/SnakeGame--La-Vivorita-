@@ -1,6 +1,6 @@
 cuerpo_coordenadas = [(0, 680), (300, 300)]
 print(cuerpo_coordenadas)
-
+a = (1, 3)
 coordenada_X, coordenada_Y = cuerpo_coordenadas[0]
 coords = (coordenada_X, coordenada_Y)
 print(cuerpo_coordenadas[0])

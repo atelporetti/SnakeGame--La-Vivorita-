@@ -58,8 +58,8 @@ musica_play = 'Assets/audio/power_up.wav'
 #---------------------------------
 
 #------------- SNAKE -------------
-VELOCIDAD = 20
-INTERVALO_TIEMPO_MS = 100
+VELOCIDAD = CELL_SIZE
+INTERVALO_TIEMPO_MS = 85
 #---------------------------------
 
 # shapes
