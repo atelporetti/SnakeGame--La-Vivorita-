@@ -43,8 +43,6 @@ class PantallaJuego(Frame):
         #self._canvas.create_rectangle(360, 360, 380, 380, fill=constantes.color_cabeza)
                 
         self.configuracion_tkinter_pygame()
-        self.reproducir_musica()
-
 
         #self.snake = Vivorita(self._canvas, constantes.color_cuerpo, constantes.color_cabeza, 360, 360)
         #self.snake.grosor
@@ -56,9 +54,3 @@ class PantallaJuego(Frame):
         if platform.system == "Windows":
             os.environ['SDL_VIDEODRIVER'] = 'windib'
 
-    def reproducir_musica(self):
-        pygame.mixer.pre_init(44100, -16, 2, 2048)
-        pygame.mixer.init()
-        pygame.mixer.music.load(constantes.musica_en_juego)
-        pygame.mixer.music.set_volume(0.4)
-        pygame.mixer.music.play(-1)

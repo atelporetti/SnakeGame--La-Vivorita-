@@ -19,6 +19,8 @@ CELL_WIDTH = int(WINDOW_WIDTH / CELL_SIZE)
 CELL_HEIGHT = int(WINDOW_HEIGHT / CELL_SIZE)
 CANVA_WIDTH = 680
 CANVA_HEIGHT = 620
+assert CANVA_WIDTH % CELL_SIZE == 0, 'El tamaño de la celda debe ser siempre multiplo del ancho de la ventana.'
+assert CANVA_HEIGHT % CELL_SIZE == 0, 'El tamaño de la celda debe ser siempre multiplo del alto de la ventana'
 CELL_CANVA_WIDTH = int(CANVA_WIDTH / CELL_SIZE)
 CELL_CANVA_HEIGHT = int(CANVA_HEIGHT / CELL_SIZE)
 #---------------------------------
@@ -38,7 +40,14 @@ titulo = 'La Vivorita: el juego'
 tipografia = '8-bit pusab'
 cabeza_serpiente = 'Assets/img/snake_head.png' #snake_head2_20x20
 cuerpo_serpiente = 'Assets/img/snake_body.png' #snake_body_20x20
-comida = 'Assets/img/comida.png'
+comida_violeta = 'Assets/img/comida_violeta.png'
+comida_roja = 'Assets/img/comida_rojo.png'
+comida_amarilla = 'Assets/img/comida_amarillo.png'
+comida_azul = 'Assets/img/comida_azul.png'
+comida_fucsia = 'Assets/img/comida_fucsia.png'
+comida_naranja = 'Assets/img/comida_naranja.png'
+comida_verde = 'Assets/img/comida_verde.png'
+comidas = [comida_violeta, comida_roja, comida_amarilla, comida_azul, comida_fucsia, comida_naranja]
 hueco = 'Assets/img/hueco.png'
 #---------------------------------
 
@@ -55,6 +64,9 @@ musica_inicio = 'Assets/audio/inicio.wav'
 musica_en_juego = 'Assets/audio/en_movimiento.wav'
 musica_fin = 'Assets/audio/game_over.wav'
 musica_play = 'Assets/audio/power_up.wav'
+musica_comida = 'Assets/audio/comer_fruta.wav'
+musica_colision = 'Assets/audio/choque.wav'
+musica_victoria = 'Assets/audio/victoria.wav'
 #---------------------------------
 
 #------------- SNAKE -------------
