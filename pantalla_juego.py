@@ -4,7 +4,7 @@ except:
     from Tkinter import *
 from ventana_inicio import Inicio
 import constantes, ventana_inicio, pygame, os, platform
-from vivorita import Vivorita, VivoritaPantalla
+from vivorita import VivoritaPantalla
 
 class PantallaJuego(Frame):
     def __init__(self, master):
@@ -14,7 +14,7 @@ class PantallaJuego(Frame):
         self._frame = Frame(master)
         self.config(background='yellow', width=constantes.WINDOW_WIDTH, height=constantes.WINDOW_HEIGHT)  # tcross, cross, dotbox
         self.grid(row=0, column=0, sticky='nsew')
-        self.puntaje = 10
+        self.puntaje = 0
         self.nivel = 0
         #self.rowconfigure((0, 1), weight=1)
         self.columnconfigure((0, 1), weight=1)

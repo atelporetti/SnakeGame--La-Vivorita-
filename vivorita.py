@@ -15,6 +15,7 @@ class VivoritaPantalla(Canvas):
         self.grid(row=1, column=0, columnspan=2)
 
         self.puntaje = 0
+        self.nivel = 1
         self.cuerpo_coordenadas = [(300, 300), (300, 300)]
         self.comida_coordenadas = self.genera_comida_aleatoria()
         self.color_cabeza = constantes.color_cabeza
@@ -26,7 +27,6 @@ class VivoritaPantalla(Canvas):
         self.bind_all('<Key>', self.presiona_tecla)
 
         self.cargar_imagenes_cuerpo_cabeza()
-        self.cargar_bordes()
         self.cargar_vivorita()
         self.cargar_comida()
         self.mover_vivorita()
@@ -79,9 +79,20 @@ class VivoritaPantalla(Canvas):
 
     def comprobar_colisiones(self):
         coordenada_X, coordenada_Y = self.cuerpo_coordenadas[0]
-        # True si se cumplen algunas de las dos condiciones: choque contra las paredes (dos valores, inferior y superior o izquierdo y derecho) o contra su cuerpo
-        return(coordenada_X in (0, constantes.CANVA_WIDTH) or coordenada_Y in (0, constantes.CANVA_HEIGHT)
-        or (coordenada_X, coordenada_Y) in self.cuerpo_coordenadas[1:])
+        if (coordenada_X in (0, constantes.CANVA_WIDTH) or coordenada_Y in (0, constantes.CANVA_HEIGHT) or (coordenada_X, coordenada_Y) in self.cuerpo_coordenadas[1:]):
+            # True si se cumplen algunas de las dos condiciones: choque contra las paredes (dos valores, inferior y superior o izquierdo y derecho) o contra su cuerpo
+            return True
+        if self.nivel == 1:
+            if coordenada_X == 0:
+                self.cuerpo_coordenadas[0] = (constantes.CANVA_WIDTH, coordenada_Y)
+            elif coordenada_X == constantes.CANVA_WIDTH:
+                self.cuerpo_coordenadas[0] = (0, coordenada_Y)
+            elif coordenada_Y == 0:
+                self.cuerpo_coordenadas[0] = (coordenada_X, constantes.CANVA_HEIGHT)
+            elif coordenada_Y == constantes.CANVA_HEIGHT:
+                self.cuerpo_coordenadas[0] = (coordenada_X, 0)
+        elif self.nivel == 1:
+            
 
     def presiona_tecla(self, evento):
         nueva_direccion = evento.keysym
@@ -105,6 +116,10 @@ class VivoritaPantalla(Canvas):
             # Aumenta gradualmente la velocidad cada dos puntos
             if self.puntaje % 2 == 0:
                 constantes.MOVIMIENTOS_POR_SEGUNDO += 2
+            elif self.puntaje == 10:
+                self.nivel += 1
+                self.cargar_bordes()
+
             # Actualiza el puntaje
             puntaje = self.find_withtag('score')
             self.itemconfigure(puntaje, text=f'Score: {self.puntaje}', tag='score')
@@ -120,7 +135,7 @@ class VivoritaPantalla(Canvas):
 
 
 
-""" root = Tk()
+root = Tk()
 
 vivorita = VivoritaPantalla(root)
-root.mainloop() """
+root.mainloop()
