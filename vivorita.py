@@ -38,16 +38,9 @@ class VivoritaPantalla(Canvas):
         self.create_text(
             35, 12, text=f"Score: {self.puntaje}", tag="score", fill="#fff", font=10
         )
-        #
-
         self.cabeza = PhotoImage(file=constantes.cabeza_serpiente)
-        #self.create_image(-10, -10, image=self.cabeza, tag='bloque_cabeza')
         self.cuerpo = PhotoImage(file=constantes.cuerpo_serpiente)
-        #self.create_image(-10, -10, image=self.cuerpo, tag='bloque_cuerpo')
         self.comida = PhotoImage(file=constantes.comida)
-        #self.create_image(-10, -10, image=self.comida, tag='bloque_comida')
-        self.hueco = PhotoImage(file=constantes.comida)
-        #self.create_image(-10, -10, image=self.hueco, tag='bloque_hueco')
 
     def cargar_bordes(self):
         self.create_rectangle(5,5,constantes.CANVA_WIDTH-5,constantes.CANVA_HEIGHT-5, outline=constantes.color_cuerpo)
@@ -80,7 +73,7 @@ class VivoritaPantalla(Canvas):
         if self.comprobar_colisiones():
             print('Fin del juego!')
             return
-        self.colisiona_comida()
+        self.come_comida()
         self.mover_vivorita()
         self.after(constantes.VELOCIDAD, self.realizar_acciones)
 
@@ -98,21 +91,20 @@ class VivoritaPantalla(Canvas):
             and {self.direccion, nueva_direccion} not in direcciones_opuestas):
             self.direccion = nueva_direccion
 
-    def colisiona_comida(self):
+    def come_comida(self):
         if self.comida_coordenadas == self.cuerpo_coordenadas[0]:
             self.puntaje += 1
-            # Agrega la cola de la serpiente una vez, que luego sera quitada con la funcion mover_vivorita()
+            # Agrega la cola de la serpiente una vez, queda duplicadda la coordenada que luego al moverse una sera quitada con la funcion mover_vivorita()
             self.cuerpo_coordenadas.append(self.cuerpo_coordenadas[-1])
             # Crea un bloque en la ultima posicion de la vivorita
-            self.create_image(*self.cuerpo_coordenadas[-1], image=self.cuerpo, tag='bloque_cuerpo')
+            self.create_image(*self.cuerpo_coordenadas[-1], image=self.cuerpo, tag='cuerpo')
             
             self.comida_coordenadas = self.genera_comida_aleatoria()
             self.coords(self.find_withtag('comida'), *self.comida_coordenadas)
 
-            # Aumenta gradualmente la velocidad
+            # Aumenta gradualmente la velocidad cada dos puntos
             if self.puntaje % 2 == 0:
                 constantes.MOVIMIENTOS_POR_SEGUNDO += 2
-            #self.cargar_vivorita()
             # Actualiza el puntaje
             puntaje = self.find_withtag('score')
             self.itemconfigure(puntaje, text=f'Score: {self.puntaje}', tag='score')
@@ -128,7 +120,7 @@ class VivoritaPantalla(Canvas):
 
 
 
-root = Tk()
+""" root = Tk()
 
 vivorita = VivoritaPantalla(root)
-root.mainloop()
+root.mainloop() """
