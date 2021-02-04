@@ -14,7 +14,7 @@ class VivoritaPantalla(Canvas):
         self.config(bg=constantes.color_fondo, width=constantes.CANVA_WIDTH, height=constantes.CANVA_HEIGHT, highlightthickness=0)
         self.grid(row=1, column=0, columnspan=2)
 
-        self.puntaje = 0
+        self.puntaje = 9
         self.nivel = 1
         self.cuerpo_coordenadas = [(300, 300), (300, 300)]
         self.comida_coordenadas = self.genera_comida_aleatoria()
@@ -83,7 +83,6 @@ class VivoritaPantalla(Canvas):
             # True si se cumplen algunas de las dos condiciones: choque contra las paredes (dos valores, inferior y superior o izquierdo y derecho) o contra su cuerpo
             return True
         if self.nivel == 1:
-            # Mejorar que si esta en los bordes no sabe que hacer
             if coordenada_X == 0:
                 self.cuerpo_coordenadas[0] = (constantes.CANVA_WIDTH, coordenada_Y)
             elif coordenada_X == constantes.CANVA_WIDTH:
@@ -93,7 +92,9 @@ class VivoritaPantalla(Canvas):
             elif coordenada_Y == constantes.CANVA_HEIGHT:
                 self.cuerpo_coordenadas[0] = (coordenada_X, 0)
         elif self.nivel == 1:
-            pass
+            # Poner que no se pueda ir y chquee si colisiona en los bordes
+            if coordenada_X in (0, constantes.CANVA_WIDTH) or coordenada_Y in (0, constantes.CANVA_HEIGHT):
+                return True
             
 
     def presiona_tecla(self, evento):
@@ -118,7 +119,7 @@ class VivoritaPantalla(Canvas):
             # Aumenta gradualmente la velocidad cada dos puntos
             if self.puntaje % 2 == 0:
                 constantes.MOVIMIENTOS_POR_SEGUNDO += 2
-            elif self.puntaje == 10:
+            if self.puntaje == 10:
                 self.nivel += 1
                 self.cargar_bordes()
 
