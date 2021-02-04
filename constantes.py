@@ -58,8 +58,10 @@ musica_play = 'Assets/audio/power_up.wav'
 #---------------------------------
 
 #------------- SNAKE -------------
-VELOCIDAD = CELL_SIZE
-INTERVALO_TIEMPO_MS = 85
+MOVIMIENTOS_POR_SEGUNDO = 12
+VELOCIDAD = 1000 // MOVIMIENTOS_POR_SEGUNDO # Se divide por mil ya que la funcion after() toma el tiempo en milisegundos
+
+
 #---------------------------------
 
 # shapes

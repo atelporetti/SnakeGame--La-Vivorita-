@@ -5,29 +5,11 @@ except:
 import constantes
 import random
 
-class Bloque():
-    x = 0
-    y = 0
-    color = ''
-    grosor = constantes.CELL_SIZE
 
-    """ def __init__(self, color, x, y):
-        self.color = color
-        self.x = x
-        self.y = y """
 
-    def coordenadas_aleatorias(self):
-        rango_x, rango_y = int(constantes.CANVA_WIDTH-15), int(constantes.CANVA_HEIGHT-15)
-        while True:
-            x, y = random.randint(0, rango_x), random.randint(0, rango_y)
-            if (x and y) % 20 == 0:
-                break
-        return (x, y)
-
-class VivoritaPantalla(Canvas, Bloque):
+class VivoritaPantalla(Canvas):
     def __init__(self, master):
         Canvas.__init__(self, master)
-        Bloque.__init__(self)
         self.master = master
         self.config(bg=constantes.color_fondo, width=constantes.CANVA_WIDTH, height=constantes.CANVA_HEIGHT, highlightthickness=0)
         self.grid(row=1, column=0, columnspan=2)
@@ -48,7 +30,7 @@ class VivoritaPantalla(Canvas, Bloque):
         self.cargar_vivorita()
         self.cargar_comida()
         self.mover_vivorita()
-        self.after(constantes.INTERVALO_TIEMPO_MS, self.realizar_acciones)
+        self.after(constantes.VELOCIDAD, self.realizar_acciones)
 
     def cargar_imagenes_cuerpo_cabeza(self):
 
@@ -81,16 +63,16 @@ class VivoritaPantalla(Canvas, Bloque):
         coordenada_X, coordenada_Y = self.cuerpo_coordenadas[0]
 
         if self.direccion == 'Right':
-            nueva_coordenada_cabeza = (coordenada_X + constantes.VELOCIDAD, coordenada_Y) # + constantes.VELOCIDAD
+            nueva_coordenada_cabeza = (coordenada_X + constantes.CELL_SIZE, coordenada_Y)
         elif self.direccion == 'Left':
-            nueva_coordenada_cabeza = (coordenada_X - constantes.VELOCIDAD, coordenada_Y) # + constantes.VELOCIDAD
+            nueva_coordenada_cabeza = (coordenada_X - constantes.CELL_SIZE, coordenada_Y)
         elif self.direccion == 'Up':
-            nueva_coordenada_cabeza = (coordenada_X, coordenada_Y - constantes.VELOCIDAD) # + constantes.VELOCIDAD
+            nueva_coordenada_cabeza = (coordenada_X, coordenada_Y - constantes.CELL_SIZE)
         elif self.direccion == 'Down':
-            nueva_coordenada_cabeza = (coordenada_X, coordenada_Y + constantes.VELOCIDAD) # + constantes.VELOCIDAD
+            nueva_coordenada_cabeza = (coordenada_X, coordenada_Y + constantes.CELL_SIZE)
         
         self.cuerpo_coordenadas = [nueva_coordenada_cabeza] + self.cuerpo_coordenadas[:-1]
-        # Empareja las imagenes de los segmentos del cuerpo con las nuevas coordenadas, por pares
+        # Empareja las imagenes de los segmentos del cuerpo con las nuevas coordenadas, formando ua tupla por pares
         for segmento, coordenada in zip(self.find_withtag('cuerpo'), self.cuerpo_coordenadas):
             self.coords(segmento, coordenada)
     
@@ -100,7 +82,7 @@ class VivoritaPantalla(Canvas, Bloque):
             return
         self.colisiona_comida()
         self.mover_vivorita()
-        self.after(constantes.INTERVALO_TIEMPO_MS, self.realizar_acciones)
+        self.after(constantes.VELOCIDAD, self.realizar_acciones)
 
     def comprobar_colisiones(self):
         coordenada_X, coordenada_Y = self.cuerpo_coordenadas[0]
@@ -128,9 +110,9 @@ class VivoritaPantalla(Canvas, Bloque):
             self.coords(self.find_withtag('comida'), *self.comida_coordenadas)
 
             # Aumenta gradualmente la velocidad
-            if self.puntaje % 4 == 0:
-                constantes.INTERVALO_TIEMPO_MS -= 5
-            self.cargar_vivorita()
+            if self.puntaje % 2 == 0:
+                constantes.MOVIMIENTOS_POR_SEGUNDO += 2
+            #self.cargar_vivorita()
             # Actualiza el puntaje
             puntaje = self.find_withtag('score')
             self.itemconfigure(puntaje, text=f'Score: {self.puntaje}', tag='score')
