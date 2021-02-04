@@ -79,10 +79,11 @@ class VivoritaPantalla(Canvas):
 
     def comprobar_colisiones(self):
         coordenada_X, coordenada_Y = self.cuerpo_coordenadas[0]
-        if (coordenada_X in (0, constantes.CANVA_WIDTH) or coordenada_Y in (0, constantes.CANVA_HEIGHT) or (coordenada_X, coordenada_Y) in self.cuerpo_coordenadas[1:]):
+        if (coordenada_X, coordenada_Y) in self.cuerpo_coordenadas[1:]:
             # True si se cumplen algunas de las dos condiciones: choque contra las paredes (dos valores, inferior y superior o izquierdo y derecho) o contra su cuerpo
             return True
         if self.nivel == 1:
+            # Mejorar que si esta en los bordes no sabe que hacer
             if coordenada_X == 0:
                 self.cuerpo_coordenadas[0] = (constantes.CANVA_WIDTH, coordenada_Y)
             elif coordenada_X == constantes.CANVA_WIDTH:
@@ -92,6 +93,7 @@ class VivoritaPantalla(Canvas):
             elif coordenada_Y == constantes.CANVA_HEIGHT:
                 self.cuerpo_coordenadas[0] = (coordenada_X, 0)
         elif self.nivel == 1:
+            pass
             
 
     def presiona_tecla(self, evento):
