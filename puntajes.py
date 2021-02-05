@@ -3,11 +3,12 @@
 except:
     from Tkinter import * """
 import csv, constantes
+from tkinter import IntVar
 
 class Puntaje:
-    """ def __init__(self, master):
-        self.contador = StringVar(master, "0")
-        self.maximo = StringVar(master, "0") """
+    def __init__(self, master):
+        self.contador = IntVar(master, 0)
+        self.maximo = IntVar(master, 0)
 
     def aumenta(self):
         puntaje = int(self.contador.get()) + 1
@@ -16,7 +17,7 @@ class Puntaje:
         self.maximo.set(str(maximo))
 
     def reset(self):
-        self.contador.set("0")
+        self.contador.set(0)
 
     def lee_ordena_archivo(self):
         """ Guarda la lista de puntajes en el archivo.
@@ -50,20 +51,14 @@ class Puntaje:
     def abre_cvs(self, ubicacion):
         with open(ubicacion, mode='r') as archivo_csv:
             csv_leido = csv.DictReader(archivo_csv, delimiter=';', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-            line_count = 0
             for row in csv_leido:
-                if line_count == 0:
-                    print(f'Column names are {", ".join(row)}')
-                    line_count += 1
                 print(f'\t{row["Puntaje"]} {row["Jugador"]} {row["Tiempo"]}')
-                line_count += 1
-            print(f'Processed {line_count} lines.')
 
     def guarda_csv(self, ubicacion):
         with open(ubicacion, mode='a') as archivo_csv:
             campos = ['Puntaje', 'Jugador', 'Tiempo']
             csv_escrito = csv.DictWriter(archivo_csv, fieldnames=campos, delimiter=';', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-            csv_escrito.writeheader()
+            #csv_escrito.writeheader()
             csv_escrito.writerow({'Puntaje': '15', 'Jugador': 'Cashlos', 'Tiempo': '450'})
 
 ranking = Puntaje()
