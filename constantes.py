@@ -72,10 +72,12 @@ musica_victoria = 'Assets/audio/victoria.wav'
 #------------- SNAKE -------------
 MOVIMIENTOS_POR_SEGUNDO = 12
 VELOCIDAD = 1000 // MOVIMIENTOS_POR_SEGUNDO # Se divide por mil ya que la funcion after() toma el tiempo en milisegundos
-
-
 #---------------------------------
 
+#------------- ARCHIVOS -------------
+ranking = 'Assets/other/ranking.csv'
+VELOCIDAD = 1000 // MOVIMIENTOS_POR_SEGUNDO # Se divide por mil ya que la funcion after() toma el tiempo en milisegundos
+#---------------------------------
 # shapes
 snake_factor = 1
 obstacle_factor = 0.9

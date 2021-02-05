@@ -1,3 +1,4 @@
+que em[piee cuando aprieto una tecla
 aleatoria ubicacion vivorita cuando empieza
 que no pueda ir por bordes en nivel 1
 hacer un nivel mas

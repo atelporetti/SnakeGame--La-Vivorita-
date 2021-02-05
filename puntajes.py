@@ -1,12 +1,13 @@
-try:
+""" try:
     from tkinter import *
 except:
-    from Tkinter import *
+    from Tkinter import * """
+import csv, constantes
 
 class Puntaje:
-    def __init__(self, master):
+    """ def __init__(self, master):
         self.contador = StringVar(master, "0")
-        self.maximo = StringVar(master, "0")
+        self.maximo = StringVar(master, "0") """
 
     def aumenta(self):
         puntaje = int(self.contador.get()) + 1
@@ -16,3 +17,37 @@ class Puntaje:
 
     def reset(self):
         self.contador.set("0")
+
+    def lee_ordena_archivo(self):
+        """ Guarda la lista de puntajes en el archivo.
+        Pre: nombre_archivo corresponde a un archivo válido,
+        puntajes corresponde a una lista de tuplas de 3 elementos.
+        Post: se guardaron los valores en el archivo,
+        separados por comas.
+        """
+        puntajes = []
+        nombres = []
+        tiempos_juego = []
+        with open('Assets/other/ranking_puntajes.txt', 'r+') as ranking_puntajes:
+            for linea in ranking_puntajes:
+                linea = linea.rstrip()
+                puntaje, nombre, tiempo_juego = linea.split()
+                puntajes.append(puntaje)
+                nombres.append(nombre)
+                tiempos_juego.append(tiempo_juego)
+            archivo_ordenado = zip(puntajes, nombres)
+            print(archivo_ordenado)
+            puntajes_ordenados = sorted(puntajes, reverse=True)
+            print(puntajes_ordenados)
+            archivo_ordenado_ = zip(puntajes_ordenados, nombres, tiempos_juego)
+            print(archivo_ordenado_)
+            return archivo_ordenado_
+    
+    def guarda_archivo(self):
+        with open('Assets/other/ranking.txt', 'a') as archivo_escrito:
+            archivo_escrito.write('\nBeagle')
+
+ranking = Puntaje()
+ranking.lee_ordena_archivo()
+ranking.guarda_archivo()
+

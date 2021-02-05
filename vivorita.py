@@ -2,7 +2,7 @@ try:
     from tkinter import *
 except:
     from Tkinter import *
-import constantes, random , pygame
+import constantes, random , pygame, time
 
 
 
@@ -15,6 +15,7 @@ class VivoritaPantalla(Canvas):
 
         self.puntaje = 0
         self.nivel = 1
+        self.tiempo_juego_inicio = time.time()
         self.cuerpo_coordenadas = [(300, 300), (300, 300)]
         self.comida_coordenadas = self.genera_comida_aleatoria()
         self.color_cabeza = constantes.color_cabeza
@@ -127,6 +128,7 @@ class VivoritaPantalla(Canvas):
             if (nueva_direccion in self.direcciones_posibles 
                 and {self.direccion, nueva_direccion} not in direcciones_opuestas):
                     self.direccion = nueva_direccion
+
     def come_comida(self):
         if self.comida_coordenadas == self.cuerpo_coordenadas[0]:
             self.puntaje += 1
@@ -179,9 +181,23 @@ class VivoritaPantalla(Canvas):
         sound_effect.set_volume(0.5)
         pygame.mixer.Sound.play(sound_effect)
 
+    def guarda_puntajes(nombre_archivo, nombre):
+        """ Guarda la lista de puntajes en el archivo.
+        Pre: nombre_archivo corresponde a un archivo válido,
+        puntajes corresponde a una lista de tuplas de 3 elementos.
+        Post: se guardaron los valores en el archivo,
+        separados por comas.
+        """
+        with open (nombre_archivo, "w") as archivo:
+            for puntaje, nombre, tiempo in archivo:
+                archivo.write(f'{puntaje} {nombre} {tiempo}\n')
+
     def fin_juego(self):
+        self.tiempo_juego_fin = time.time()
+        self.tiempo_juego_total = int(self.tiempo_juego_fin - self.tiempo_juego_inicio)
+        self.guarda_puntajes()
         self.grid_remove()
-        self.master.geom
+        
 
 """ root = Tk()
 
