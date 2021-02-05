@@ -10,9 +10,19 @@ _1. Instalar las fuentes ubicadas dentro de la carpeta 'fonts'_
 _2. Instalar pygame:_
 
       python3 -m pip install -U pygame --user
+      
 o si no funciona:
 
       pip pygame install
+      
+_3. Instalar pandas:_
+
+      python3 -m pip install pandas
+ 
+ o si no funciona:
+
+      pip pandas install
+      
 
 ## Construido con 🛠️
 
@@ -20,3 +30,4 @@ o si no funciona:
 * Librerias:
   * pygame
   * tkinter
+  * pandas
