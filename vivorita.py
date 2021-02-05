@@ -3,6 +3,7 @@ try:
 except:
     from Tkinter import *
 import constantes, random , pygame, time
+from ranking import Ranking
 
 
 
@@ -14,6 +15,7 @@ class VivoritaPantalla(Canvas):
         self.grid(row=1, column=0, columnspan=2)
 
         self.puntaje = 0
+        self.jugador = 'Atel'
         self.nivel = 1
         self.tiempo_juego_inicio = time.time()
         self.cuerpo_coordenadas = [(300, 300), (300, 300)]
@@ -168,29 +170,31 @@ class VivoritaPantalla(Canvas):
         pygame.mixer.pre_init(44100, -16, 2, 2048)
         pygame.mixer.init()
         pygame.mixer.music.load(constantes.musica_en_juego)
-        pygame.mixer.music.set_volume(0.4)
+        pygame.mixer.music.set_volume(0.01)
         pygame.mixer.music.play(-1)
 
     def reproducir_sonido_comida(self):
         sound_effect = pygame.mixer.Sound(constantes.musica_comida)
-        sound_effect.set_volume(0.5)
+        sound_effect.set_volume(0.4)
         pygame.mixer.Sound.play(sound_effect)
 
     def reproducir_sonido_colision(self):
         sound_effect = pygame.mixer.Sound(constantes.musica_colision)
-        sound_effect.set_volume(0.5)
+        sound_effect.set_volume(0.4)
         pygame.mixer.Sound.play(sound_effect)
 
-    def guarda_puntajes(nombre_archivo, nombre):
-        """ Guarda la lista de puntajes en el archivo.
-        Pre: nombre_archivo corresponde a un archivo válido,
-        puntajes corresponde a una lista de tuplas de 3 elementos.
-        Post: se guardaron los valores en el archivo,
-        separados por comas.
-        """
-        with open (nombre_archivo, "w") as archivo:
-            for puntaje, nombre, tiempo in archivo:
-                archivo.write(f'{puntaje} {nombre} {tiempo}\n')
+    def reproducir_sonido_victoria(self):
+        sound_effect = pygame.mixer.Sound(constantes.musica_victoria)
+        sound_effect.set_volume(0.4)
+        pygame.mixer.Sound.play(sound_effect)
+
+    def guarda_puntajes(self):
+        ranking = Ranking(self.puntaje, self.jugador,self.tiempo_juego_total, constantes.RANKING)
+        #dar un tiempo hasta que se ejecute la funcion
+        if ranking.es_puntaje_alto():
+            self.reproducir_sonido_victoria()
+        ranking.guarda_partida_csv()
+        ranking.ordena_puntaje_cvs()
 
     def fin_juego(self):
         self.tiempo_juego_fin = time.time()
@@ -199,7 +203,7 @@ class VivoritaPantalla(Canvas):
         self.grid_remove()
         
 
-""" root = Tk()
+root = Tk()
 
 vivorita = VivoritaPantalla(root)
-root.mainloop() """
+root.mainloop()

@@ -1,4 +1,8 @@
-Puntaje;Jugador;Tiempo
-1;Io;100
-30;Atel;200
-20;Vale;300
+Puntaje,Jugador,Tiempo
+6,Atel,17
+6,Atel,17
+4,Excel,500
+3,Atel,86
+2,Atel,20
+1,Atel,6
+1,Atel,5
