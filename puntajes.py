@@ -46,8 +46,28 @@ class Puntaje:
     def guarda_archivo(self):
         with open('Assets/other/ranking.txt', 'a') as archivo_escrito:
             archivo_escrito.write('\nBeagle')
+    
+    def abre_cvs(self, ubicacion):
+        with open(ubicacion, mode='r') as archivo_csv:
+            csv_leido = csv.DictReader(archivo_csv, delimiter=';', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+            line_count = 0
+            for row in csv_leido:
+                if line_count == 0:
+                    print(f'Column names are {", ".join(row)}')
+                    line_count += 1
+                print(f'\t{row["Puntaje"]} {row["Jugador"]} {row["Tiempo"]}')
+                line_count += 1
+            print(f'Processed {line_count} lines.')
+
+    def guarda_csv(self, ubicacion):
+        with open(ubicacion, mode='a') as archivo_csv:
+            campos = ['Puntaje', 'Jugador', 'Tiempo']
+            csv_escrito = csv.DictWriter(archivo_csv, fieldnames=campos, delimiter=';', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+            csv_escrito.writeheader()
+            csv_escrito.writerow({'Puntaje': '15', 'Jugador': 'Cashlos', 'Tiempo': '450'})
 
 ranking = Puntaje()
-ranking.lee_ordena_archivo()
-ranking.guarda_archivo()
-
+#ranking.lee_ordena_archivo()
+#ranking.guarda_archivo()
+ranking.abre_cvs(constantes.RANKING)
+ranking.guarda_csv(constantes.RANKING)

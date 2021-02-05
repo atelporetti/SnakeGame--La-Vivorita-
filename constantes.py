@@ -75,7 +75,7 @@ VELOCIDAD = 1000 // MOVIMIENTOS_POR_SEGUNDO # Se divide por mil ya que la funcio
 #---------------------------------
 
 #------------- ARCHIVOS -------------
-ranking = 'Assets/other/ranking.csv'
+RANKING = 'Assets/other/ranking.csv'
 VELOCIDAD = 1000 // MOVIMIENTOS_POR_SEGUNDO # Se divide por mil ya que la funcion after() toma el tiempo en milisegundos
 #---------------------------------
 # shapes
