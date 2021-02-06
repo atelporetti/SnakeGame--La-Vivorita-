@@ -6,7 +6,7 @@ import constantes
 import random
 import pygame
 import time
-from ranking import Ranking
+from ranking import Ranking, PantallaRanking
 
 
 class VivoritaPantalla(Canvas):
@@ -175,7 +175,6 @@ class VivoritaPantalla(Canvas):
             self.comida_coordenadas = self.genera_comida_aleatoria()
             self.coords(self.find_withtag('comida'), *self.comida_coordenadas)
 
-            # Aumenta gradualmente la velocidad cada dos puntos
             if self.puntaje % 2 == 0:
                 constantes.VELOCIDAD -= 3
             if self.puntaje == 5:
@@ -257,16 +256,17 @@ class VivoritaPantalla(Canvas):
         self.cuenta_tiempo()
         pygame.mixer.music.stop()
         self.guarda_puntajes()
-        # self.grid_remove()
         self.create_text(
             self.winfo_width() / 2,
             self.winfo_height() / 2 - 40,
-            text=f'Game over! Tu puntaje fue {self.puntaje}!',
+            text=f'GAME OVER! Tu puntaje fue {self.puntaje}!',
             fill='white',
             font=(constantes.tipografia, 14),
             justify=CENTER
         )
-        #self.after(2, self.realizar_acciones)
+        self.grid_remove()
+        self.master.master.cambia_frame(PantallaRanking, self.master)
+
 
     # Movimiento perpetuo
     def realizar_acciones(self):
@@ -276,9 +276,3 @@ class VivoritaPantalla(Canvas):
         self.come_comida()
         self.mover_vivorita()
         self.after(constantes.VELOCIDAD, self.realizar_acciones)
-
-
-root = Tk()
-
-vivorita = VivoritaPantalla(root)
-root.mainloop()

@@ -23,3 +23,6 @@ class Ranking:
     def es_puntaje_alto(self):
         ranking = pd.read_csv(self.ubicacion_archivo, sep=',')
         return self.puntaje > ranking['Puntaje'].max()
+
+class PantallaRanking(Frame):
+    pass
