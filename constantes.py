@@ -1,4 +1,4 @@
-#------------ SCREEN -------------
+#------------ PANTALLA -------------
 WINDOW_WIDTH = 720
 WINDOW_HEIGHT = 700
 CELL_SIZE = 20
@@ -16,7 +16,7 @@ filas = 5
 columnas = 1
 #---------------------------------
 
-#------- COMMANDS KEYBOARD -------
+#------- COMANDOS TECLADO- -------
 DIRECCIONES_FLECHAS = ('Left', 'Right', 'Up', 'Down')
 UP = 'up'
 DOWN = 'down'
@@ -24,7 +24,7 @@ LEFT = 'left'
 RIGHT = 'right'
 #---------------------------------
 
-#------------ IMAGES ------------
+#------------ IMAGENES -----------
 imagen_fondo = 'Assets/img/snake_welcome658x288.png'
 icon = 'Assets/img/snake_icon.ico'
 titulo = 'La Vivorita: el juego'
@@ -41,7 +41,7 @@ comida_verde = 'Assets/img/comida_verde.png'
 comidas = [comida_violeta, comida_roja, comida_amarilla, comida_azul, comida_fucsia, comida_naranja]
 #---------------------------------
 
-#------------ COLORS ------------
+#------------ COLORES ------------
 color_tipografia = '#B2BD08'
 color_cabeza = '#B2BD08'
 color_cuerpo = '#B2BD59'
@@ -49,7 +49,7 @@ color_obstaculo = '#B22B00'
 color_fondo = 'black'
 #---------------------------------
 
-#------------- MUSIC -------------
+#------------- MUSICA ------------
 musica_inicio = 'Assets/audio/inicio.wav'
 musica_en_juego = 'Assets/audio/en_movimiento.wav'
 musica_fin = 'Assets/audio/game_over.wav'
@@ -64,6 +64,6 @@ movimientos_por_segundo = 12
 VELOCIDAD = 1000 // movimientos_por_segundo # Se divide por mil ya que la funcion after() toma el tiempo en milisegundos
 #---------------------------------
 
-#------------- ARCHIVOS -------------
+#------------- ARCHIVOS ----------
 RANKING = 'Assets/other/ranking.csv'
 #---------------------------------
