@@ -178,7 +178,7 @@ class VivoritaPantalla(Canvas):
 
             # Aumenta gradualmente la velocidad cada dos puntos
             if self.puntaje % 2 == 0:
-                constantes.movimientos_por_segundo += 3
+                constantes.VELOCIDAD -= 2
             if self.puntaje == 5:
                 self.nivel += 1
                 self.cargar_bordes_ext()
@@ -231,8 +231,7 @@ class VivoritaPantalla(Canvas):
         pygame.mixer.Sound.play(sound_effect)
 
     def guarda_puntajes(self):
-        ranking = Ranking(self.puntaje, self.jugador,
-                          self.tiempo_juego_total, constantes.RANKING)
+        ranking = Ranking(self.puntaje, self.jugador, self.tiempo_juego_total, constantes.RANKING)
         if ranking.es_puntaje_alto():
             self.after(1500, (self.reproducir_sonido_victoria))
             self.create_text(
