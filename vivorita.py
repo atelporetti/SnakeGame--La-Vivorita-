@@ -20,12 +20,13 @@ class VivoritaPantalla(Canvas):
         self.puntaje = 0
         self.jugador = 'Atel'
         self.nivel = 1
-        self.cabeza_coordenadas = (120, 100)
-        self.cuerpo_coordenadas = [self.cabeza_coordenadas, (300, 300)]
-        self.comida_coordenadas = self.genera_coordenada_aleatoria()
+        self.cabeza_coordenadas = self.genera_comida_aleatoria_inicio()
+        self.cuerpo_coordenadas = [self.cabeza_coordenadas, (self.cabeza_coordenadas[0]-20, self.cabeza_coordenadas[1])]
+        self.comida_coordenadas = self.genera_comida_aleatoria()
         self.color_cabeza = constantes.color_cabeza
         self.direcciones_posibles = constantes.DIRECCIONES_FLECHAS
-        self.direccion = random.choice(self.direcciones_posibles)
+        # Si se quiere que empiece con una direccion aleatoria automaticamente cambiar self.direccion = random.choice(self.direcciones_posibles)
+        self.direccion = ''
         self.bind_all('<Key>', self.presiona_tecla)
         self.tiempo_juego_inicio = time.time()
         self.cargar_imagenes_cuerpo_cabeza()
@@ -69,24 +70,22 @@ class VivoritaPantalla(Canvas):
         coordenada_X, coordenada_Y = self.cuerpo_coordenadas[0]
 
         if self.direccion == 'Right':
-            nueva_coordenada_cabeza = (
-                coordenada_X + constantes.CELL_SIZE, coordenada_Y)
+            nueva_coordenada_cabeza = (coordenada_X + constantes.CELL_SIZE, coordenada_Y)
         elif self.direccion == 'Left':
-            nueva_coordenada_cabeza = (
-                coordenada_X - constantes.CELL_SIZE, coordenada_Y)
+            nueva_coordenada_cabeza = (coordenada_X - constantes.CELL_SIZE, coordenada_Y)
         elif self.direccion == 'Up':
-            nueva_coordenada_cabeza = (
-                coordenada_X, coordenada_Y - constantes.CELL_SIZE)
+            nueva_coordenada_cabeza = (coordenada_X, coordenada_Y - constantes.CELL_SIZE)
         elif self.direccion == 'Down':
-            nueva_coordenada_cabeza = (
-                coordenada_X, coordenada_Y + constantes.CELL_SIZE)
-
-        self.cuerpo_coordenadas = [
-            nueva_coordenada_cabeza] + self.cuerpo_coordenadas[:-1]
-        # Empareja las imagenes de los segmentos del cuerpo con las nuevas coordenadas, formando ua tupla por pares
-        self.coords(self.find_withtag('cabeza'), nueva_coordenada_cabeza)
-        for segmento, coordenada in zip(self.find_withtag('cuerpo'), self.cuerpo_coordenadas[1:]):
-            self.coords(segmento, coordenada)
+            nueva_coordenada_cabeza = (coordenada_X, coordenada_Y + constantes.CELL_SIZE)
+        
+        # Para que empiece al presionar una tecla de direccion
+        if (self.direccion in constantes.DIRECCIONES_FLECHAS):
+            self.cuerpo_coordenadas = [nueva_coordenada_cabeza] + self.cuerpo_coordenadas[:-1]
+            # Empareja las imagenes de los segmentos del cuerpo con las nuevas coordenadas, formando ua tupla por pares
+            # Actualiza las coordenadas de las imagenes de la serpiente
+            self.coords(self.find_withtag('cabeza'), nueva_coordenada_cabeza)
+            for segmento, coordenada in zip(self.find_withtag('cuerpo'), self.cuerpo_coordenadas[1:]):
+                self.coords(segmento, coordenada)
 
     def comprobar_colisiones(self):
         coordenada_X, coordenada_Y = self.cuerpo_coordenadas[0]
@@ -173,7 +172,7 @@ class VivoritaPantalla(Canvas):
             self.create_image(
                 *self.cuerpo_coordenadas[-1], image=self.cuerpo, tag='cuerpo')
             self.cambia_comida()
-            self.comida_coordenadas = self.genera_coordenada_aleatoria()
+            self.comida_coordenadas = self.genera_comida_aleatoria()
             self.coords(self.find_withtag('comida'), *self.comida_coordenadas)
 
             # Aumenta gradualmente la velocidad cada dos puntos
@@ -190,13 +189,16 @@ class VivoritaPantalla(Canvas):
             self.itemconfigure(
                 puntaje, text=f'Score: {self.puntaje}', tag='score')
 
-    def genera_coordenada_aleatoria(self):
+    def genera_comida_aleatoria_inicio(self):
+        coordenada_X = random.randint(2, constantes.CELL_CANVA_WIDTH-1) * constantes.CELL_SIZE
+        coordenada_Y = random.randint(1, constantes.CELL_CANVA_HEIGHT-1) * constantes.CELL_SIZE
+        return (coordenada_X, coordenada_Y)
+
+    def genera_comida_aleatoria(self):
         while True:
             # Se les resta 1 para que no queden ubicadas en el borde del mapa y se considere perdido el juego
-            coordenada_X = random.randint(
-                1, constantes.CELL_CANVA_WIDTH-1) * constantes.CELL_SIZE
-            coordenada_Y = random.randint(
-                1, constantes.CELL_CANVA_HEIGHT-1) * constantes.CELL_SIZE
+            coordenada_X = random.randint(1, constantes.CELL_CANVA_WIDTH-1) * constantes.CELL_SIZE
+            coordenada_Y = random.randint(1, constantes.CELL_CANVA_HEIGHT-1) * constantes.CELL_SIZE
             coordenadas_aleatorias = (coordenada_X, coordenada_Y)
             if self.nivel < 3:
                 if(coordenadas_aleatorias not in self.cuerpo_coordenadas):
@@ -266,6 +268,7 @@ class VivoritaPantalla(Canvas):
         )
         #self.after(2, self.realizar_acciones)
 
+    # Movimiento perpetuo
     def realizar_acciones(self):
         if self.comprobar_colisiones():
             self.fin_juego()
@@ -275,7 +278,7 @@ class VivoritaPantalla(Canvas):
         self.after(constantes.VELOCIDAD, self.realizar_acciones)
 
 
-""" root = Tk()
+root = Tk()
 
 vivorita = VivoritaPantalla(root)
-root.mainloop() """
+root.mainloop()

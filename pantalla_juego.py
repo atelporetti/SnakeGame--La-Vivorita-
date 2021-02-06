@@ -39,7 +39,6 @@ class PantallaJuego(Frame):
 
         # ------------------------------
         self.vivora = VivoritaPantalla(self)
-        #self._canvas.create_rectangle(360, 360, 380, 380, fill=constantes.color_cabeza)
 
     #Por si hiciera falta
     def configuracion_tkinter_pygame(self):

@@ -1,6 +1,3 @@
-que empiecee cuando aprieto una tecla
-aleatoria ubicacion vivorita cuando empieza
 que no pueda ir por bordes en nivel 1
-hacer un nivel mas
 Contador tiempo cuando termine
 pantalla puntaje final
