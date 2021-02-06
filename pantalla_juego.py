@@ -9,7 +9,6 @@ from vivorita import VivoritaPantalla
 class PantallaJuego(Frame):
     def __init__(self, master):
         Frame.__init__(self, master)
-        #Frame.configure(self,bg='blue', width=800, height=800)
         self.master = master
         self._frame = Frame(master)
         self.config(background='yellow', width=constantes.WINDOW_WIDTH, height=constantes.WINDOW_HEIGHT)  # tcross, cross, dotbox
@@ -41,12 +40,6 @@ class PantallaJuego(Frame):
         # ------------------------------
         self.vivora = VivoritaPantalla(self)
         #self._canvas.create_rectangle(360, 360, 380, 380, fill=constantes.color_cabeza)
-                
-        self.configuracion_tkinter_pygame()
-
-        #self.snake = Vivorita(self._canvas, constantes.color_cuerpo, constantes.color_cabeza, 360, 360)
-        #self.snake.grosor
-        #self.snake.block_coords
 
     #Por si hiciera falta
     def configuracion_tkinter_pygame(self):

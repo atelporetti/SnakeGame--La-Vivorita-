@@ -1,12 +1,3 @@
-width = 40
-height = 20
-step_len = 2 * height
-
-grid = {
-    "tamanio": width * height,
-    "background_color": "grey",
-
-}
 filas = 5
 columnas = 1
 #------------ SCREEN -------------
@@ -38,8 +29,8 @@ imagen_fondo = 'Assets/img/snake_welcome658x288.png'
 icon = 'Assets/img/snake_icon.ico'
 titulo = 'La Vivorita: el juego'
 tipografia = '8-bit pusab'
-cabeza_serpiente = 'Assets/img/snake_head.png' #snake_head2_20x20
-cuerpo_serpiente = 'Assets/img/snake_body.png' #snake_body_20x20
+cabeza_serpiente = 'Assets/img/cabeza_serpiente.png'
+cuerpo_serpiente = 'Assets/img/cuerpo_serpiente.png'
 comida_violeta = 'Assets/img/comida_violeta.png'
 comida_roja = 'Assets/img/comida_rojo.png'
 comida_amarilla = 'Assets/img/comida_amarillo.png'
@@ -48,7 +39,6 @@ comida_fucsia = 'Assets/img/comida_fucsia.png'
 comida_naranja = 'Assets/img/comida_naranja.png'
 comida_verde = 'Assets/img/comida_verde.png'
 comidas = [comida_violeta, comida_roja, comida_amarilla, comida_azul, comida_fucsia, comida_naranja]
-hueco = 'Assets/img/hueco.png'
 #---------------------------------
 
 #------------ COLORS ------------
@@ -70,31 +60,11 @@ musica_victoria = 'Assets/audio/victoria.wav'
 #---------------------------------
 
 #------------- SNAKE -------------
-MOVIMIENTOS_POR_SEGUNDO = 12
-VELOCIDAD = 1000 // MOVIMIENTOS_POR_SEGUNDO # Se divide por mil ya que la funcion after() toma el tiempo en milisegundos
+movimientos_por_segundo = 12
+VELOCIDAD = 1000 // movimientos_por_segundo # Se divide por mil ya que la funcion after() toma el tiempo en milisegundos
 #---------------------------------
 
 #------------- ARCHIVOS -------------
 RANKING = 'Assets/other/ranking.csv'
-VELOCIDAD = 1000 // MOVIMIENTOS_POR_SEGUNDO # Se divide por mil ya que la funcion after() toma el tiempo en milisegundos
+VELOCIDAD = 1000 // movimientos_por_segundo # Se divide por mil ya que la funcion after() toma el tiempo en milisegundos
 #---------------------------------
-# shapes
-snake_factor = 1
-obstacle_factor = 0.9
-
-obstacle = {
-    "size": height * obstacle_factor,
-    "color": "red",
-}
-
-snake = {
-    "size": height * snake_factor,
-    "color": "white",
-}
-
-direction_vectors = {
-    "Arriba": (0, -1),
-    "Abajo": (0, 1),
-    "Izquierda": (-1, 0),
-    "Derecha": (1, 0),
-}

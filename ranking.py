@@ -23,8 +23,3 @@ class Ranking:
     def es_puntaje_alto(self):
         ranking = pd.read_csv(self.ubicacion_archivo, sep=',')
         return self.puntaje > ranking['Puntaje'].max()
-
-""" ranking = Ranking(100, "Excel", 500, 'Assets/other/ranking.csv')
-ranking.guarda_partida_csv()
-ranking.ordena_puntaje_cvs()
-ranking.es_puntaje_alto(50) """
