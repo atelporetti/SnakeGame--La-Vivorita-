@@ -1,8 +1,12 @@
 try:
-    from tkinter import *
+    from tkinter import Button, Frame, StringVar, IntVar, Label, PhotoImage, Entry, Radiobutton
 except:
-    from Tkinter import *
-import constantes, pygame, os, platform
+    from Tkinter import Button, Frame, StringVar, IntVar, Label, PhotoImage, Entry, Radiobutton
+try:
+    from tkinter.constants import CENTER
+except:
+    from Tkinter.constants import CENTER
+import constantes, pygame
 from threading import Timer
 
 class Inicio(Frame):
@@ -153,6 +157,3 @@ class Inicio(Frame):
         self._frame.grid_remove()
         from pantalla_juego import PantallaJuego
         self.master.cambia_frame(PantallaJuego, self.master)
-    
-    def invisibilizar(self):
-        self.master.withdraw()    

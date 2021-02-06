@@ -1,9 +1,9 @@
 try:
-    from tkinter import *
+    from tkinter import Button, Frame, StringVar, IntVar, Label
 except:
-    from Tkinter import *
+    from Tkinter import Button, Frame, StringVar, IntVar, Label
 from ventana_inicio import Inicio
-import constantes, ventana_inicio, pygame, os, platform
+import constantes, os, platform
 from vivorita import VivoritaPantalla
 
 class PantallaJuego(Frame):

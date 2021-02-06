@@ -178,7 +178,7 @@ class VivoritaPantalla(Canvas):
 
             # Aumenta gradualmente la velocidad cada dos puntos
             if self.puntaje % 2 == 0:
-                constantes.VELOCIDAD -= 2
+                constantes.VELOCIDAD -= 3
             if self.puntaje == 5:
                 self.nivel += 1
                 self.cargar_bordes_ext()
@@ -212,7 +212,7 @@ class VivoritaPantalla(Canvas):
         pygame.mixer.pre_init(44100, -16, 2, 2048)
         pygame.mixer.init()
         pygame.mixer.music.load(constantes.musica_en_juego)
-        pygame.mixer.music.set_volume(0.03)
+        pygame.mixer.music.set_volume(0.04)
         pygame.mixer.music.play(-1)
 
     def reproducir_sonido_comida(self):
@@ -275,7 +275,7 @@ class VivoritaPantalla(Canvas):
         self.after(constantes.VELOCIDAD, self.realizar_acciones)
 
 
-root = Tk()
+""" root = Tk()
 
 vivorita = VivoritaPantalla(root)
-root.mainloop()
+root.mainloop() """

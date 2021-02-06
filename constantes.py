@@ -1,5 +1,3 @@
-filas = 5
-columnas = 1
 #------------ SCREEN -------------
 WINDOW_WIDTH = 720
 WINDOW_HEIGHT = 700
@@ -14,6 +12,8 @@ assert CANVA_WIDTH % CELL_SIZE == 0, 'El tamaño de la celda debe ser siempre mu
 assert CANVA_HEIGHT % CELL_SIZE == 0, 'El tamaño de la celda debe ser siempre multiplo del alto de la ventana'
 CELL_CANVA_WIDTH = int(CANVA_WIDTH / CELL_SIZE)
 CELL_CANVA_HEIGHT = int(CANVA_HEIGHT / CELL_SIZE)
+filas = 5
+columnas = 1
 #---------------------------------
 
 #------- COMMANDS KEYBOARD -------
@@ -66,5 +66,4 @@ VELOCIDAD = 1000 // movimientos_por_segundo # Se divide por mil ya que la funcio
 
 #------------- ARCHIVOS -------------
 RANKING = 'Assets/other/ranking.csv'
-VELOCIDAD = 1000 // movimientos_por_segundo # Se divide por mil ya que la funcion after() toma el tiempo en milisegundos
 #---------------------------------
