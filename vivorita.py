@@ -4,10 +4,10 @@ except:
     from Tkinter import *
 import constantes
 import random
-import pygame
+#import pygame
 import time
 from ranking import Ranking, PantallaRanking
-
+from musica import Reproductor
 
 class VivoritaPantalla(Canvas):
     def __init__(self, master):
@@ -34,7 +34,8 @@ class VivoritaPantalla(Canvas):
         self.cargar_comida()
         self.mover_vivorita()
         self.after(constantes.VELOCIDAD, self.realizar_acciones)
-        self.reproducir_musica_fondo()
+        self.reproductor = Reproductor()
+        self.reproductor.reproducir_musica(constantes.musica_en_juego, 0.04)
 
     def cargar_imagenes_cuerpo_cabeza(self):
         self.create_text(
@@ -165,7 +166,7 @@ class VivoritaPantalla(Canvas):
     def come_comida(self):
         if self.comida_coordenadas == self.cuerpo_coordenadas[0]:
             self.puntaje += 1
-            self.reproducir_sonido_comida()
+            self.reproductor.reproducir_sonido(constantes.musica_comida, 0.4)
             # Agrega la cola de la serpiente una vez, queda duplicadda la coordenada que luego al moverse una sera quitada con la funcion mover_vivorita()
             self.cuerpo_coordenadas.append(self.cuerpo_coordenadas[-1])
             # Crea un bloque en la ultima posicion de la vivorita
@@ -209,32 +210,10 @@ class VivoritaPantalla(Canvas):
     def cambia_comida(self):
         return self.itemconfig(self.find_withtag('comida'), image=self.comidas[random.randint(0, len(constantes.comidas)-1)])
 
-    def reproducir_musica_fondo(self):
-        pygame.mixer.pre_init(44100, -16, 2, 2048)
-        pygame.mixer.init()
-        pygame.mixer.music.load(constantes.musica_en_juego)
-        pygame.mixer.music.set_volume(0.04)
-        pygame.mixer.music.play(-1)
-
-    def reproducir_sonido_comida(self):
-        sound_effect = pygame.mixer.Sound(constantes.musica_comida)
-        sound_effect.set_volume(0.4)
-        pygame.mixer.Sound.play(sound_effect)
-
-    def reproducir_sonido_colision(self):
-        sound_effect = pygame.mixer.Sound(constantes.musica_colision)
-        sound_effect.set_volume(0.4)
-        pygame.mixer.Sound.play(sound_effect)
-
-    def reproducir_sonido_victoria(self):
-        sound_effect = pygame.mixer.Sound(constantes.musica_victoria)
-        sound_effect.set_volume(0.4)
-        pygame.mixer.Sound.play(sound_effect)
-
     def guarda_puntajes(self):
         ranking = Ranking(self.puntaje, self.jugador, self.tiempo_juego_total, constantes.RANKING)
         if ranking.es_puntaje_alto():
-            self.after(1500, (self.reproducir_sonido_victoria))
+            self.after(1500, (self.reproductor.reproducir_sonido(constantes.musica_victoria, 0.4)))
             self.create_text(
                 self.winfo_width() / 2,
                 self.winfo_height() / 2 + 20,
@@ -252,9 +231,9 @@ class VivoritaPantalla(Canvas):
             self.tiempo_juego_fin - self.tiempo_juego_inicio)
 
     def fin_juego(self):
-        self.reproducir_sonido_colision()
+        self.reproductor.reproducir_sonido(constantes.musica_colision, 0.4)
         self.cuenta_tiempo()
-        pygame.mixer.music.stop()
+        self.reproductor.para_sonido()
         self.guarda_puntajes()
         self.create_text(
             self.winfo_width() / 2,
@@ -266,7 +245,6 @@ class VivoritaPantalla(Canvas):
         )
         self.grid_remove()
         self.master.master.cambia_frame(PantallaRanking, self.master)
-
 
     # Movimiento perpetuo
     def realizar_acciones(self):

@@ -1,7 +1,11 @@
 import csv
 import pandas as pd
+try:
+    from tkinter import Frame
+except:
+    from Tkinter import Frame
 
-class Ranking:
+class Ranking():
     def __init__(self, puntaje, jugador, tiempo, ubicacion_archivo):
         self.puntaje = puntaje
         self.jugador = jugador
@@ -24,5 +28,8 @@ class Ranking:
         ranking = pd.read_csv(self.ubicacion_archivo, sep=',')
         return self.puntaje > ranking['Puntaje'].max()
 
+    def lee(self):
+        ranking = pd.read_csv(self.ubicacion_archivo, nrows= 10, sep=',')
+        ranking.shape()
 class PantallaRanking(Frame):
     pass
