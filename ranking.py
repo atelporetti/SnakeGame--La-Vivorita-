@@ -28,8 +28,8 @@ class Ranking():
         ranking = pd.read_csv(self.ubicacion_archivo, sep=',')
         return self.puntaje > ranking['Puntaje'].max()
 
-    def lee(self):
-        ranking = pd.read_csv(self.ubicacion_archivo, nrows= 10, sep=',')
+    def lee_n_lineas(self, numero):
+        ranking = pd.read_csv(self.ubicacion_archivo, nrows=numero, sep=',')
         ranking.shape()
 class PantallaRanking(Frame):
     pass
