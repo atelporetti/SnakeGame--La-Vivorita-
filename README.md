@@ -28,6 +28,6 @@ _3. Instalar pandas:_
 
 * Python 🐍 v 3.9.1
 * Librerias:
-  * tkinter ()
-  * pygame (para el sonido)
-  * pandas (para persistencia de datos)
+  * tkinter (Interfaz gráfica de usuario)
+  * pygame (uso: Reproducción de sonidos)
+  * pandas (uso: Persistencia de datos)
