@@ -103,11 +103,11 @@ class Inicio(Frame):
         if self.btn_musica_on_off['text'] == 'Musica OFF':
             self.btn_musica_on_off['text'] = 'Musica ON'
             self.btn_musica_on_off['fg'] = constantes.color_tipografia
-            self.reproductor.pausa_sonido()
+            self.reproductor.pausa_musica()
         elif self.btn_musica_on_off['text'] == 'Musica ON':
             self.btn_musica_on_off['text'] = 'Musica OFF'
             self.btn_musica_on_off['fg'] = 'white'
-            self.reproductor.reanuda_sonido()
+            self.reproductor.reanuda_musica()
         
     def cambia_dificultad(self):
         if self.master.dificultad.get() == 'Facil':
@@ -135,7 +135,7 @@ class Inicio(Frame):
             self.msj_alerta(alerta)
             t = Timer(1.5, lambda:[self.borrar_widget_grid()])
             t.start()
-            self.reproductor.para_sonido()
+            self.reproductor.para_musica()
             self.reproductor.reproducir_sonido(constantes.musica_play, 0.5)
 
     def borrar_widget_grid(self):

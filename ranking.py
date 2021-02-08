@@ -33,6 +33,16 @@ class Ranking():
         ranking = ranking.append(data_frame, sort=False)
         ranking.to_csv(self.ubicacion_archivo, index=False)
 
+    def esta_en_primeros(self):
+        ranking = pd.read_csv(self.ubicacion_archivo, sep=',')
+        datos = {
+            'Puntaje': [self.puntaje],
+            'Jugador': [self.jugador],
+            'Dificultad': [self.dificultad],
+            'Tiempo': [self.tiempo]
+        }
+        return ((ranking['Puntaje'] == self.puntaje) & (ranking['Jugador'] == self.jugador) & (ranking['Dificultad'] == self.dificultad)).any()
+
     def es_puntaje_alto(self):
         ranking = pd.read_csv(self.ubicacion_archivo, sep=',')
         return self.puntaje > ranking['Puntaje'].max()
@@ -40,7 +50,6 @@ class Ranking():
     def lee_n_lineas(numero):
         ranking = pd.read_csv(constantes.RANKING, nrows=numero, sep=',', skiprows=1, names=constantes.NOMBRES_COLUMNAS)
         return ranking.values.tolist()
-
 
 class PantallaRanking(Frame):
     def __init__(self, master):
@@ -51,7 +60,7 @@ class PantallaRanking(Frame):
                     height=constantes.WINDOW_HEIGHT)
         self.grid(row=0, column=0)
         self.rowconfigure((0, 12), weight=1)
-        self.columnconfigure((0, 2), weight=1)
+        self.columnconfigure((0, 4), weight=1)
         self.crea_widgets()
         self.crea_ranking()
 
@@ -90,41 +99,72 @@ class PantallaRanking(Frame):
 
         self.button = Button(self, text='Volver a jugar', command=lambda: [
                             self.master.cambia_frame(Inicio, self.master)], font=(constantes.tipografia, 6, 'bold'))
-        self.button.grid(row=18, column=0, columnspan=3, sticky='nsew', padx=0, pady=0)
+        self.button.grid(row=12, column=0, columnspan=4, sticky='nsew', padx=0, pady=0)
         self.button.config(bg=constantes.color_fondo, fg=constantes.color_tipografia,
                             justify='center',
                             font=(constantes.tipografia, 12))
 
     def crea_ranking(self):
-        self.puntajes = Ranking.lee_n_lineas(10)
+        puntajes = Ranking.lee_n_lineas(10)
         row = 1
-        for puntaje in self.puntajes:
-            self.lb_puntaje = Label(self, text=puntaje[0],
-                                    font=(constantes.tipografia, 12),
-                                    bg=constantes.color_fondo,
-                                    fg='white')
-            self.lb_puntaje.grid(row=row, column=0,
+        for puntaje in puntajes:
+            if ((puntaje[0] == self.master.puntaje.get()) & (puntaje[1] == self.master.nombre.get()) & (puntaje[2] == self.master.dificultad.get())): #self.master.partida.es_puntaje_alto():
+                self.lb_puntaje = Label(self, text=puntaje[0],
+                                        font=(constantes.tipografia, 12),
+                                        bg=constantes.color_fondo,
+                                        fg='red')
+                self.lb_puntaje.grid(row=row, column=0,
+                                        sticky='nsew',
+                                        padx=10, pady=10)
+                self.lb_jugador = Label(self, text=puntaje[1],
+                                        font=(constantes.tipografia, 12),
+                                        bg=constantes.color_fondo,
+                                        fg='red')
+                self.lb_jugador.grid(row=row, column=1,
+                                        sticky='nsew',
+                                        padx=10, pady=10)
+                self.lb_dificultad = Label(self, text=puntaje[2],
+                                        font=(constantes.tipografia, 12),
+                                        bg=constantes.color_fondo,
+                                        fg='red')
+                self.lb_dificultad.grid(row=row, column=2,
                                     sticky='nsew',
                                     padx=10, pady=10)
-            self.lb_jugador = Label(self, text=puntaje[1],
-                                    font=(constantes.tipografia, 12),
-                                    bg=constantes.color_fondo,
-                                    fg='white')
-            self.lb_jugador.grid(row=row, column=1,
+                self.lb_tiempo = Label(self, text=puntaje[3],
+                                        font=(constantes.tipografia, 12),
+                                        bg=constantes.color_fondo,
+                                        fg='red')
+                self.lb_tiempo.grid(row=row, column=3,
                                     sticky='nsew',
                                     padx=10, pady=10)
-            self.lb_dificultad = Label(self, text=puntaje[2],
-                                    font=(constantes.tipografia, 12),
-                                    bg=constantes.color_fondo,
-                                    fg='white')
-            self.lb_dificultad.grid(row=row, column=2,
-                                sticky='nsew',
-                                padx=10, pady=10)
-            self.lb_tiempo = Label(self, text=puntaje[3],
-                                    font=(constantes.tipografia, 12),
-                                    bg=constantes.color_fondo,
-                                    fg='white')
-            self.lb_tiempo.grid(row=row, column=3,
-                                sticky='nsew',
-                                padx=10, pady=10)
-            row += 1
+                row += 1
+            else:
+                self.lb_puntaje = Label(self, text=puntaje[0],
+                                        font=(constantes.tipografia, 12),
+                                        bg=constantes.color_fondo,
+                                        fg='white')
+                self.lb_puntaje.grid(row=row, column=0,
+                                        sticky='nsew',
+                                        padx=10, pady=10)
+                self.lb_jugador = Label(self, text=puntaje[1],
+                                        font=(constantes.tipografia, 12),
+                                        bg=constantes.color_fondo,
+                                        fg='white')
+                self.lb_jugador.grid(row=row, column=1,
+                                        sticky='nsew',
+                                        padx=10, pady=10)
+                self.lb_dificultad = Label(self, text=puntaje[2],
+                                        font=(constantes.tipografia, 12),
+                                        bg=constantes.color_fondo,
+                                        fg='white')
+                self.lb_dificultad.grid(row=row, column=2,
+                                    sticky='nsew',
+                                    padx=10, pady=10)
+                self.lb_tiempo = Label(self, text=puntaje[3],
+                                        font=(constantes.tipografia, 12),
+                                        bg=constantes.color_fondo,
+                                        fg='white')
+                self.lb_tiempo.grid(row=row, column=3,
+                                    sticky='nsew',
+                                    padx=10, pady=10)
+                row += 1

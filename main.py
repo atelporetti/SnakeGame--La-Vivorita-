@@ -2,7 +2,7 @@ try:
     from tkinter import Tk, StringVar, IntVar
 except:
     from Tkinter import Tk, StringVar, IntVar
-from ranking import PantallaRanking
+from ranking import PantallaRanking, Ranking
 import time
 import traceback
 import constantes
@@ -45,8 +45,8 @@ class Main(Tk):
 try:
     if __name__ == "__main__":
         root = Main()
-        #root.cambia_frame(Inicio, root)
-        root.cambia_frame(PantallaRanking, root)
+        root.cambia_frame(Inicio, root)
+        #root.cambia_frame(PantallaRanking, root)
         root.mainloop()
 except:
     traceback.print_exc()

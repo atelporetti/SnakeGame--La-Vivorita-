@@ -18,11 +18,11 @@ class Reproductor():
         self.sonido.set_volume(volumen)
         pygame.mixer.Sound.play(self.sonido)
 
-    def para_sonido(self):
+    def para_musica(self):
         pygame.mixer.music.stop()
     
-    def pausa_sonido(self):
+    def pausa_musica(self):
         pygame.mixer.music.pause()
     
-    def reanuda_sonido(self):
+    def reanuda_musica(self):
         pygame.mixer.music.unpause()

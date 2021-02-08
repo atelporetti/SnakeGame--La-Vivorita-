@@ -205,8 +205,8 @@ class VivoritaPantalla(Canvas):
         return self.itemconfig(self.find_withtag('comida'), image=self.comidas[random.randint(0, len(constantes.comidas)-1)])
 
     def guarda_puntajes(self):
-        ranking = Ranking(self.master.master.puntaje.get(), self.master.master.nombre.get(), self.master.master.dificultad.get(), self.tiempo_juego_total, constantes.RANKING)
-        if ranking.es_puntaje_alto():
+        partida = Ranking(self.master.master.puntaje.get(), self.master.master.nombre.get(), self.master.master.dificultad.get(), self.tiempo_juego_total, constantes.RANKING)
+        if partida.es_puntaje_alto():
             self.after(1500, (self.reproductor.reproducir_sonido(constantes.musica_victoria, 0.4)))
             self.create_text(
                 self.winfo_width() / 2,
@@ -216,8 +216,8 @@ class VivoritaPantalla(Canvas):
                 font=(constantes.tipografia, 14),
                 justify=CENTER
             )
-        ranking.guarda_partida_csv()
-        ranking.ordena_puntaje_cvs()
+        partida.guarda_partida_csv()
+        partida.ordena_puntaje_cvs()
 
     def cuenta_tiempo(self):
         self.tiempo_juego_fin = time.time()
@@ -225,9 +225,9 @@ class VivoritaPantalla(Canvas):
             self.tiempo_juego_fin - self.master.master.tiempo)
 
     def fin_juego(self):
+        self.reproductor.para_musica()
         self.reproductor.reproducir_sonido(constantes.musica_colision, 0.4)
         self.cuenta_tiempo()
-        self.reproductor.para_sonido()
         self.guarda_puntajes()
         self.create_text(
             self.winfo_width() / 2,

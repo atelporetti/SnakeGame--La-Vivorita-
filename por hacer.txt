@@ -1,3 +1,0 @@
-que no pueda ir por bordes en nivel 1
-Contador tiempo cuando termine
-pantalla puntaje final
