@@ -6,7 +6,6 @@ import time
 import traceback
 import constantes
 from ventana_inicio import Inicio
-from pantalla_juego import PantallaJuego
 
 
 class Main(Tk):

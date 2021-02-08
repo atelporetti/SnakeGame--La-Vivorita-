@@ -14,6 +14,8 @@ class Inicio(Frame):
     def __init__(self, master, *args, **kwargs):
         Frame.__init__(self, master, *args, **kwargs)
         self.master = master
+        self.master.nombre.set('')
+        self.master.puntaje.set(0)
         self._frame = Frame(master)
         self._frame.config(bg=constantes.color_fondo)
         self._frame.grid(row=0, column=0)

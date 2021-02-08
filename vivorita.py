@@ -1,11 +1,12 @@
 try:
-    from tkinter import *
+    from tkinter import Canvas, PhotoImage
 except:
-    from Tkinter import *
-import constantes
-import random
-#import pygame
-import time
+    from Tkinter import Canvas, PhotoImage
+try:
+    from tkinter.constants import CENTER
+except:
+    from Tkinter.constants import CENTER
+import constantes, random, time
 from ranking import Ranking, PantallaRanking
 from musica import Reproductor
 
@@ -35,8 +36,6 @@ class VivoritaPantalla(Canvas):
         self.reproductor.reproducir_musica(constantes.musica_en_juego, 0.04)
 
     def cargar_imagenes_cuerpo_cabeza(self):
-        self.create_text(
-            35, 12, text=f"Score: {self.master.master.puntaje.get()}", tag="score", fill="#fff", font=10)
         self.cabeza = PhotoImage(file=constantes.cabeza_serpiente)
         self.cuerpo = PhotoImage(file=constantes.cuerpo_serpiente)
 
@@ -187,10 +186,6 @@ class VivoritaPantalla(Canvas):
             elif self.master.master.puntaje.get() == 10:
                 self.nivel += 1
                 self.cargar_bordes_int()
-            # Actualiza el puntaje
-            puntaje = self.find_withtag('score')
-            self.itemconfigure(
-                puntaje, text=f'Score: {self.master.master.puntaje.get()}', tag='score')
 
     def genera_comida_aleatoria_inicio(self):
         coordenada_X = random.randint(2, constantes.CELL_CANVA_WIDTH-1) * constantes.CELL_SIZE
