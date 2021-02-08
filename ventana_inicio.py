@@ -1,7 +1,7 @@
 try:
-    from tkinter import Button, Frame, StringVar, IntVar, Label, PhotoImage, Entry, Radiobutton
+    from tkinter import Button, Frame, Label, PhotoImage, Entry, Radiobutton
 except:
-    from Tkinter import Button, Frame, StringVar, IntVar, Label, PhotoImage, Entry, Radiobutton
+    from Tkinter import Button, Frame, Label, PhotoImage, Entry, Radiobutton
 try:
     from tkinter.constants import CENTER
 except:
@@ -72,7 +72,7 @@ class Inicio(Frame):
         self.rb_facil = Radiobutton(self._frame,
                             text='Facil',
                             variable=self.master.dificultad,
-                            value=1,
+                            value='Facil',
                             command=self.cambia_dificultad)
         self.rb_facil.config(bg=constantes.color_fondo, fg='white',
                             justify='center',
@@ -82,7 +82,7 @@ class Inicio(Frame):
         self.rb_dificil = Radiobutton(self._frame,
                                 text='Dificil',
                                 variable=self.master.dificultad,
-                                value=2,
+                                value='Dificil',
                                 command=self.cambia_dificultad)
         self.rb_dificil.config(bg=constantes.color_fondo, fg='white',
                         justify='center', font=(constantes.tipografia, 12))
@@ -110,11 +110,11 @@ class Inicio(Frame):
             self.reproductor.reanuda_sonido()
         
     def cambia_dificultad(self):
-        if self.master.dificultad.get() == 1:
+        if self.master.dificultad.get() == 'Facil':
             self.master.velocidad.set(83)
             self.rb_facil['fg'] = constantes.color_tipografia
             self.rb_dificil['fg'] = 'white'
-        elif self.master.dificultad.get() == 2:
+        elif self.master.dificultad.get() == 'Dificil':
             self.master.velocidad.set(53)
             self.rb_dificil['fg'] = constantes.color_tipografia
             self.rb_facil['fg'] = 'white'

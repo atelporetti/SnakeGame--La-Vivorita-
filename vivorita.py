@@ -205,7 +205,7 @@ class VivoritaPantalla(Canvas):
         return self.itemconfig(self.find_withtag('comida'), image=self.comidas[random.randint(0, len(constantes.comidas)-1)])
 
     def guarda_puntajes(self):
-        ranking = Ranking(self.master.master.puntaje.get(), self.master.master.nombre.get(), self.nivel, self.tiempo_juego_total, constantes.RANKING)
+        ranking = Ranking(self.master.master.puntaje.get(), self.master.master.nombre.get(), self.master.master.dificultad.get(), self.tiempo_juego_total, constantes.RANKING)
         if ranking.es_puntaje_alto():
             self.after(1500, (self.reproductor.reproducir_sonido(constantes.musica_victoria, 0.4)))
             self.create_text(
@@ -237,7 +237,7 @@ class VivoritaPantalla(Canvas):
             font=(constantes.tipografia, 14),
             justify=CENTER
         )
-        self.after(2500, self.master.master.cambia_frame(PantallaRanking, self.master))
+        self.after(2500, self.master.master.cambia_frame(PantallaRanking, self.master.master))
 
     # Movimiento perpetuo
     def bucle_juego(self):
