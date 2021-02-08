@@ -7,6 +7,7 @@ try:
 except:
     from Tkinter.constants import CENTER
 import constantes, pygame
+from musica import Reproductor
 from threading import Timer
 
 class Inicio(Frame):
@@ -20,16 +21,8 @@ class Inicio(Frame):
         self.grid(sticky='nsew')
         self.rowconfigure((0, constantes.filas), weight=1)
         self.columnconfigure((0, constantes.columnas), weight=1)
-
-        #self.controller = controller
-        #self.nombre = controller.nombre
-        #self.velocidad = controller.velocidad
-        #self.dificultad = controller.dificultad
-        self.nombre = StringVar()
-        self.velocidad = IntVar()
-        self.dificultad = IntVar()
-
-        self.reproducir_musica()
+        self.reproductor = Reproductor()
+        self.reproductor.reproducir_musica(constantes.musica_inicio, 0.4)
         self.crear_widgets()
 
     def crear_widgets(self):
@@ -53,7 +46,7 @@ class Inicio(Frame):
                                 font=(constantes.tipografia, 12))
         self.lb_nombre_j.grid(row=2, column=0, sticky='nsew', padx=10, pady=10)
 
-        self.lb_nombre_jugador = Entry(self._frame, textvariable=self.nombre)
+        self.lb_nombre_jugador = Entry(self._frame, textvariable=self.master.nombre)
         self.lb_nombre_jugador.grid(row=2, column=1, sticky='nsew', padx=10, pady=10)
         self.lb_nombre_jugador.config(bg=constantes.color_fondo, fg=constantes.color_tipografia,
                                 justify='center', font=(constantes.tipografia, 12))
@@ -76,7 +69,7 @@ class Inicio(Frame):
 
         self.rb_facil = Radiobutton(self._frame,
                             text='Facil',
-                            variable=self.dificultad,
+                            variable=self.master.dificultad,
                             value=1,
                             command=self.cambia_dificultad)
         self.rb_facil.config(bg=constantes.color_fondo, fg='white',
@@ -86,7 +79,7 @@ class Inicio(Frame):
 
         self.rb_dificil = Radiobutton(self._frame,
                                 text='Dificil',
-                                variable=self.dificultad,
+                                variable=self.master.dificultad,
                                 value=2,
                                 command=self.cambia_dificultad)
         self.rb_dificil.config(bg=constantes.color_fondo, fg='white',
@@ -100,13 +93,6 @@ class Inicio(Frame):
                         justify='center',
                         font=(constantes.tipografia, 12),
                         command=lambda:[self.guarda_datos()])
-    
-    def reproducir_musica(self):
-        pygame.mixer.pre_init(44100, -16, 2, 2048)
-        pygame.mixer.init()
-        pygame.mixer.music.load(constantes.musica_inicio)
-        pygame.mixer.music.set_volume(0.4)
-        pygame.mixer.music.play(-1)
 
     def msj_alerta(self, msj):
         self.msg_alerta.config(text=str(msj))
@@ -115,43 +101,40 @@ class Inicio(Frame):
         if self.btn_musica_on_off['text'] == 'Musica OFF':
             self.btn_musica_on_off['text'] = 'Musica ON'
             self.btn_musica_on_off['fg'] = constantes.color_tipografia
-            pygame.mixer.music.pause()
+            self.reproductor.pausa_sonido()
         elif self.btn_musica_on_off['text'] == 'Musica ON':
             self.btn_musica_on_off['text'] = 'Musica OFF'
             self.btn_musica_on_off['fg'] = 'white'
-            pygame.mixer.music.unpause()
+            self.reproductor.reanuda_sonido()
         
     def cambia_dificultad(self):
-        if self.dificultad.get() == 1:
-            self.velocidad = 1
+        if self.master.dificultad.get() == 1:
+            self.master.velocidad.set(83)
             self.rb_facil['fg'] = constantes.color_tipografia
             self.rb_dificil['fg'] = 'white'
-        elif self.dificultad.get() == 2:
-            self.velocidad = 2
+        elif self.master.dificultad.get() == 2:
+            self.master.velocidad.set(53)
             self.rb_dificil['fg'] = constantes.color_tipografia
             self.rb_facil['fg'] = 'white'
     
     def guarda_datos(self):
         alerta = ''
-        if (self.nombre.get() == '' and self.dificultad.get() == 0):
+        if (self.master.nombre.get() == '' and self.master.dificultad.get() == 0):
             alerta = 'Elija un nombre \nElija dificultad'
             self.msj_alerta(alerta)
-        elif (self.nombre.get() == ''):
+        elif (self.master.nombre.get() == ''):
             alerta = 'Elija un nombre'
             self.msj_alerta(alerta)
-        elif (self.dificultad.get() == 0):
+        elif (self.master.dificultad.get() == 0):
             alerta = 'Elija la dificultad'
             self.msj_alerta(alerta)
-        elif (self.nombre.get() and self.dificultad.get()):
+        elif (self.master.nombre.get() and self.master.dificultad.get()):
             alerta = 'Comenzando...'
             self.msj_alerta(alerta)
             t = Timer(1.5, lambda:[self.borrar_widget_grid()])
             t.start()
-            pygame.mixer.music.stop()
-            sound_effect = pygame.mixer.Sound(constantes.musica_play)
-            sound_effect.set_volume(0.5)
-            pygame.mixer.Sound.play(sound_effect)
-            return self.nombre.get(), self.dificultad.get()
+            self.reproductor.para_sonido()
+            self.reproductor.reproducir_sonido(constantes.musica_play, 0.5)
 
     def borrar_widget_grid(self):
         self._frame.grid_remove()

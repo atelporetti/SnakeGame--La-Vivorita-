@@ -2,13 +2,11 @@ try:
     from tkinter import *
 except:
     from Tkinter import *
-import os
-import pygame
-import platform
+import time
 import traceback
+import constantes
 from ventana_inicio import Inicio
 from pantalla_juego import PantallaJuego
-import constantes
 
 
 class Main(Tk):
@@ -32,9 +30,11 @@ class Main(Tk):
         self.rowconfigure((0, 1), weight=0)
         self.columnconfigure((0, 1), weight=0)
 
-        #self.nombre = StringVar()
-        #self.velocidad = IntVar()
-        #self.dificultad = IntVar()
+        self.puntaje = IntVar()
+        self.nombre = StringVar()
+        self.dificultad = IntVar()
+        self.velocidad = IntVar()
+        self.tiempo = time.time()
 
     def cambia_frame(self, frame_a_cambiar, master):
         nuevo_frame = frame_a_cambiar(master)
@@ -47,9 +47,8 @@ class Main(Tk):
 try:
     if __name__ == "__main__":
         root = Main()
-        #root.cambia_frame(Inicio, root)
-        root.cambia_frame(PantallaJuego, root)
+        root.cambia_frame(Inicio, root)
+        #root.cambia_frame(PantallaJuego, root)
         root.mainloop()
 except:
     traceback.print_exc()
-    pygame.quit()

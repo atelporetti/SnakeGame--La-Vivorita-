@@ -14,9 +14,15 @@ class Reproductor():
         pygame.mixer.music.play(-1)
     
     def reproducir_sonido(self, tema, volumen):
-        self.sound_effect = pygame.mixer.Sound(tema) #constantes.musica_comida
-        self.sound_effect.set_volume(volumen)
-        pygame.mixer.Sound.play(self.sound_effect)
+        self.sonido = pygame.mixer.Sound(tema) #constantes.musica_comida
+        self.sonido.set_volume(volumen)
+        pygame.mixer.Sound.play(self.sonido)
 
     def para_sonido(self):
         pygame.mixer.music.stop()
+    
+    def pausa_sonido(self):
+        pygame.mixer.music.pause()
+    
+    def reanuda_sonido(self):
+        pygame.mixer.music.unpause()

@@ -17,8 +17,6 @@ class VivoritaPantalla(Canvas):
                     height=constantes.CANVA_HEIGHT, highlightthickness=0)
         self.grid(row=1, column=0, columnspan=2)
 
-        self.puntaje = 0
-        self.jugador = 'Atel'
         self.nivel = 1
         self.cabeza_coordenadas = self.genera_comida_aleatoria_inicio()
         self.cuerpo_coordenadas = [self.cabeza_coordenadas, (self.cabeza_coordenadas[0]-20, self.cabeza_coordenadas[1])]
@@ -28,18 +26,17 @@ class VivoritaPantalla(Canvas):
         # Si se quiere que empiece con una direccion aleatoria automaticamente cambiar self.direccion = random.choice(self.direcciones_posibles)
         self.direccion = ''
         self.bind_all('<Key>', self.presiona_tecla)
-        self.tiempo_juego_inicio = time.time()
         self.cargar_imagenes_cuerpo_cabeza()
         self.cargar_vivorita()
         self.cargar_comida()
         self.mover_vivorita()
-        self.after(constantes.VELOCIDAD, self.realizar_acciones)
+        self.after(self.master.master.velocidad.get(), self.bucle_juego)
         self.reproductor = Reproductor()
         self.reproductor.reproducir_musica(constantes.musica_en_juego, 0.04)
 
     def cargar_imagenes_cuerpo_cabeza(self):
         self.create_text(
-            35, 12, text=f"Score: {self.puntaje}", tag="score", fill="#fff", font=10)
+            35, 12, text=f"Score: {self.master.master.puntaje.get()}", tag="score", fill="#fff", font=10)
         self.cabeza = PhotoImage(file=constantes.cabeza_serpiente)
         self.cuerpo = PhotoImage(file=constantes.cuerpo_serpiente)
 
@@ -165,7 +162,8 @@ class VivoritaPantalla(Canvas):
 
     def come_comida(self):
         if self.comida_coordenadas == self.cuerpo_coordenadas[0]:
-            self.puntaje += 1
+            puntaje = self.master.master.puntaje.get() + 1
+            self.master.master.puntaje.set(puntaje)
             self.reproductor.reproducir_sonido(constantes.musica_comida, 0.4)
             # Agrega la cola de la serpiente una vez, queda duplicadda la coordenada que luego al moverse una sera quitada con la funcion mover_vivorita()
             self.cuerpo_coordenadas.append(self.cuerpo_coordenadas[-1])
@@ -176,18 +174,23 @@ class VivoritaPantalla(Canvas):
             self.comida_coordenadas = self.genera_comida_aleatoria()
             self.coords(self.find_withtag('comida'), *self.comida_coordenadas)
 
-            if self.puntaje % 2 == 0:
-                constantes.VELOCIDAD -= 3
-            if self.puntaje == 5:
+            if self.master.master.puntaje.get() % 2 == 0:
+                if self.master.master.dificultad.get() == 1:
+                    velocidad = self.master.master.velocidad.get() - 3
+                    self.master.master.velocidad.set(velocidad)
+                else:
+                    velocidad = self.master.master.velocidad.get() - 5
+                    self.master.master.velocidad.set(velocidad)
+            if self.master.master.puntaje.get() == 5:
                 self.nivel += 1
                 self.cargar_bordes_ext()
-            elif self.puntaje == 10:
+            elif self.master.master.puntaje.get() == 10:
                 self.nivel += 1
                 self.cargar_bordes_int()
             # Actualiza el puntaje
             puntaje = self.find_withtag('score')
             self.itemconfigure(
-                puntaje, text=f'Score: {self.puntaje}', tag='score')
+                puntaje, text=f'Score: {self.master.master.puntaje.get()}', tag='score')
 
     def genera_comida_aleatoria_inicio(self):
         coordenada_X = random.randint(2, constantes.CELL_CANVA_WIDTH-1) * constantes.CELL_SIZE
@@ -211,7 +214,7 @@ class VivoritaPantalla(Canvas):
         return self.itemconfig(self.find_withtag('comida'), image=self.comidas[random.randint(0, len(constantes.comidas)-1)])
 
     def guarda_puntajes(self):
-        ranking = Ranking(self.puntaje, self.jugador, self.tiempo_juego_total, constantes.RANKING)
+        ranking = Ranking(self.master.master.puntaje.get(), self.master.master.nombre.get(), self.tiempo_juego_total, constantes.RANKING)
         if ranking.es_puntaje_alto():
             self.after(1500, (self.reproductor.reproducir_sonido(constantes.musica_victoria, 0.4)))
             self.create_text(
@@ -228,7 +231,7 @@ class VivoritaPantalla(Canvas):
     def cuenta_tiempo(self):
         self.tiempo_juego_fin = time.time()
         self.tiempo_juego_total = int(
-            self.tiempo_juego_fin - self.tiempo_juego_inicio)
+            self.tiempo_juego_fin - self.master.master.tiempo)
 
     def fin_juego(self):
         self.reproductor.reproducir_sonido(constantes.musica_colision, 0.4)
@@ -238,7 +241,7 @@ class VivoritaPantalla(Canvas):
         self.create_text(
             self.winfo_width() / 2,
             self.winfo_height() / 2 - 40,
-            text=f'GAME OVER! Tu puntaje fue {self.puntaje}!',
+            text=f'GAME OVER! Tu puntaje fue {self.master.master.puntaje.get()}!',
             fill='white',
             font=(constantes.tipografia, 14),
             justify=CENTER
@@ -247,10 +250,10 @@ class VivoritaPantalla(Canvas):
         self.master.master.cambia_frame(PantallaRanking, self.master)
 
     # Movimiento perpetuo
-    def realizar_acciones(self):
+    def bucle_juego(self):
         if self.comprobar_colisiones():
             self.fin_juego()
             return
         self.come_comida()
         self.mover_vivorita()
-        self.after(constantes.VELOCIDAD, self.realizar_acciones)
+        self.after(self.master.master.velocidad.get(), self.bucle_juego)

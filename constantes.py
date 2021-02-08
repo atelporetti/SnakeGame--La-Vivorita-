@@ -59,11 +59,6 @@ musica_colision = 'Assets/audio/choque.wav'
 musica_victoria = 'Assets/audio/victoria.wav'
 #---------------------------------
 
-#------------- SNAKE -------------
-movimientos_por_segundo = 12
-VELOCIDAD = 1000 // movimientos_por_segundo # Se divide por mil ya que la funcion after() toma el tiempo en milisegundos
-#---------------------------------
-
 #------------- ARCHIVOS ----------
 RANKING = 'Assets/other/ranking.csv'
 #---------------------------------

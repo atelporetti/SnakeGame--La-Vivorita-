@@ -13,20 +13,10 @@ class PantallaJuego(Frame):
         self._frame = Frame(master)
         self.config(background='yellow', width=constantes.WINDOW_WIDTH, height=constantes.WINDOW_HEIGHT)  # tcross, cross, dotbox
         self.grid(row=0, column=0, sticky='nsew')
-        self.puntaje = 0
-        self.nivel = 0
         #self.rowconfigure((0, 1), weight=1)
         self.columnconfigure((0, 1), weight=1)
 
-        #self.controller = controller
-        #self.nombre = controller.nombre
-        #self.velocidad = controller.velocidad
-        #self.dificultad = controller.dificultad
-        self.nombre = StringVar()
-        self.velocidad = IntVar()
-        self.dificultad = IntVar()
-
-        self.lb_nombre = Label(self, text=f'Puntaje de {self.nombre}: {self.puntaje}. Nivel: {self.nivel}', font=(constantes.tipografia, 6, "bold"))
+        self.lb_nombre = Label(self, text=f'Puntaje de {self.master.nombre.get()}: {self.master.puntaje.get()}', font=(constantes.tipografia, 6, "bold"))
         self.lb_nombre.grid(row=0, column=0, padx=0, pady=0)
         self.lb_nombre.config(bg=constantes.color_fondo, fg='white',
                             justify='left',
@@ -37,7 +27,6 @@ class PantallaJuego(Frame):
                             justify='left',
                             font=(constantes.tipografia, 12))
 
-        # ------------------------------
         self.vivora = VivoritaPantalla(self)
 
     #Por si hiciera falta
@@ -45,4 +34,3 @@ class PantallaJuego(Frame):
         os.environ['SDL_WINDOWID'] = str(self.winfo_id())
         if platform.system == "Windows":
             os.environ['SDL_VIDEODRIVER'] = 'windib'
-
