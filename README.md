@@ -1,4 +1,4 @@
-# SnakeGame--La-Vivorita-
+# SnakeGame-LaVivorita
 _Clasico juego de La Vivorita_
 
 En este juego, el jugador utiliza las teclas de flecha para mover una "serpiente" alrededor del tablero. A medida que la serpiente encuentra comida, se la come, y así crece. El juego termina cuando la serpiente sale de la pantalla o se mueve hacia sí misma. El objetivo es hacer que la serpiente sea lo más grande posible antes de que eso ocurra.
@@ -28,6 +28,6 @@ _3. Instalar pandas:_
 
 * Python 🐍 v 3.9.1
 * Librerias:
-  * pygame
-  * tkinter
-  * pandas
+  * tkinter ()
+  * pygame (para el sonido)
+  * pandas (para persistencia de datos)

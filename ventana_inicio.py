@@ -89,7 +89,7 @@ class Inicio(Frame):
         self.rb_dificil.grid(row=3, column=1, sticky='nsew', padx=10, pady=10)
 
         self.btn_jugar = Button(self._frame, text='JUGAR')
-        self.btn_jugar.grid(row=5, column=0, columnspan=2, sticky='nsew', padx=10, pady=10)
+        self.btn_jugar.grid(row=5, column=0,columnspan=2, sticky='nsew', padx=10, pady=10)
         self.btn_jugar.config(bg=constantes.color_fondo,
                         fg=constantes.color_tipografia,
                         justify='center',
