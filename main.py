@@ -2,11 +2,13 @@ try:
     from tkinter import Tk, StringVar, IntVar
 except:
     from Tkinter import Tk, StringVar, IntVar
-from ranking import PantallaRanking, Ranking
+from pantalla_juego import PantallaJuego
+from ranking import PantallaRanking
 import time
 import traceback
 import constantes
 from ventana_inicio import Inicio
+
 
 class Main(Tk):
 
@@ -42,10 +44,12 @@ class Main(Tk):
         self._frame = nuevo_frame
         self._frame.grid(row=0, column=0)
 
+
 try:
     if __name__ == "__main__":
         root = Main()
         root.cambia_frame(Inicio, root)
+        #root.cambia_frame(PantallaJuego, root)
         #root.cambia_frame(PantallaRanking, root)
         root.mainloop()
 except:

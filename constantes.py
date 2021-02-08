@@ -12,8 +12,6 @@ assert CANVA_WIDTH % CELL_SIZE == 0, 'El tamaño de la celda debe ser siempre mu
 assert CANVA_HEIGHT % CELL_SIZE == 0, 'El tamaño de la celda debe ser siempre multiplo del alto de la ventana'
 CELL_CANVA_WIDTH = int(CANVA_WIDTH / CELL_SIZE)
 CELL_CANVA_HEIGHT = int(CANVA_HEIGHT / CELL_SIZE)
-filas = 5
-columnas = 1
 #---------------------------------
 
 #------- COMANDOS TECLADO- -------
@@ -61,5 +59,6 @@ musica_victoria = 'Assets/audio/victoria.wav'
 
 #------------- ARCHIVOS ----------
 RANKING = 'Assets/other/ranking.csv'
+FILAS_RANKING = 10
 NOMBRES_COLUMNAS = ['Puntaje', 'Jugador', 'Nivel', 'Tiempo']
 #---------------------------------

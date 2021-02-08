@@ -9,6 +9,7 @@ except:
 import constantes, random, time
 from ranking import Ranking, PantallaRanking
 from musica import Reproductor
+from threading import Timer
 
 class VivoritaPantalla(Canvas):
     def __init__(self, master):
@@ -204,25 +205,29 @@ class VivoritaPantalla(Canvas):
     def cambia_comida(self):
         return self.itemconfig(self.find_withtag('comida'), image=self.comidas[random.randint(0, len(constantes.comidas)-1)])
 
-    def guarda_puntajes(self):
-        partida = Ranking(self.master.master.puntaje.get(), self.master.master.nombre.get(), self.master.master.dificultad.get(), self.tiempo_juego_total, constantes.RANKING)
-        if partida.es_puntaje_alto():
-            self.after(1500, (self.reproductor.reproducir_sonido(constantes.musica_victoria, 0.4)))
-            self.create_text(
-                self.winfo_width() / 2,
-                self.winfo_height() / 2 + 20,
-                text=f'Puntaje mas alto! Felicitaciones!',
-                fill='red',
-                font=(constantes.tipografia, 14),
-                justify=CENTER
-            )
-        partida.guarda_partida_csv()
-        partida.ordena_puntaje_cvs()
-
     def cuenta_tiempo(self):
         self.tiempo_juego_fin = time.time()
         self.tiempo_juego_total = int(
             self.tiempo_juego_fin - self.master.master.tiempo)
+
+    def guarda_puntajes(self):
+        partida = Ranking(self.master.master.puntaje.get(), self.master.master.nombre.get(), self.master.master.dificultad.get(), self.tiempo_juego_total, constantes.RANKING)
+        if partida.es_puntaje_alto():
+            t = Timer(1.1, lambda:[self.aviso_puntaje_alto()])
+            t.start()            
+        partida.guarda_partida_csv()
+        partida.ordena_puntaje_cvs()
+
+    def aviso_puntaje_alto(self):
+        self.create_text(
+            self.winfo_width() / 2,
+            self.winfo_height() / 2 + 20,
+            text=f'\n¡FELICITACIONES!\n¡Puntaje mas alto!',
+            fill='red',
+            font=(constantes.tipografia, 14),
+            justify=CENTER
+        )
+        self.reproductor.reproducir_sonido(constantes.musica_victoria, 0.4)
 
     def fin_juego(self):
         self.reproductor.para_musica()
@@ -232,17 +237,18 @@ class VivoritaPantalla(Canvas):
         self.create_text(
             self.winfo_width() / 2,
             self.winfo_height() / 2 - 40,
-            text=f'GAME OVER! Tu puntaje fue {self.master.master.puntaje.get()}!',
+            text=f'GAME OVER\n¡{self.master.master.puntaje.get()} puntos!',
             fill='white',
             font=(constantes.tipografia, 14),
             justify=CENTER
         )
-        self.after(2500, self.master.master.cambia_frame(PantallaRanking, self.master.master))
 
     # Movimiento perpetuo
     def bucle_juego(self):
         if self.comprobar_colisiones():
             self.fin_juego()
+            t = Timer(5, lambda:[self.master.master.cambia_frame(PantallaRanking, self.master.master)])
+            t.start()
             return
         self.come_comida()
         self.mover_vivorita()

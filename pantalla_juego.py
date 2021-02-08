@@ -10,7 +10,6 @@ class PantallaJuego(Frame):
     def __init__(self, master):
         Frame.__init__(self, master)
         self.master = master
-        self._frame = Frame(master)
         self.config(background='black', width=constantes.WINDOW_WIDTH, height=constantes.WINDOW_HEIGHT)
         self.grid(row=0, column=0, sticky='nsew')
         self.rowconfigure((0, 2), weight=1)
@@ -24,7 +23,7 @@ class PantallaJuego(Frame):
 
         self.lb_nombre = Label(self, textvariable=self.master.puntaje, font=(constantes.tipografia, 6, "bold"))
         self.lb_nombre.grid(row=0, column=1, padx=0, pady=0)
-        self.lb_nombre.config(bg=constantes.color_fondo, fg='white',
+        self.lb_nombre.config(bg=constantes.color_fondo, fg='orange',
                             justify='left',
                             font=(constantes.tipografia, 12))
 
