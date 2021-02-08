@@ -49,8 +49,6 @@ try:
     if __name__ == "__main__":
         root = Main()
         root.cambia_frame(Inicio, root)
-        #root.cambia_frame(PantallaJuego, root)
-        #root.cambia_frame(PantallaRanking, root)
         root.mainloop()
 except:
     traceback.print_exc()
