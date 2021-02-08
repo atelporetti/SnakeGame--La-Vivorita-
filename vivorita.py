@@ -81,7 +81,7 @@ class VivoritaPantalla(Canvas):
             for segmento, coordenada in zip(self.find_withtag('cuerpo'), self.cuerpo_coordenadas[1:]):
                 self.coords(segmento, coordenada)
 
-    def comprobar_colisiones(self):
+    def es_colision(self):
         coordenada_X, coordenada_Y = self.cuerpo_coordenadas[0]
         if (coordenada_X, coordenada_Y) in self.cuerpo_coordenadas[1:]:
             return True
@@ -156,7 +156,7 @@ class VivoritaPantalla(Canvas):
                     and {self.direccion, nueva_direccion} not in direcciones_opuestas):
                 self.direccion = nueva_direccion
 
-    def come_comida(self):
+    def come_fruta(self):
         if self.comida_coordenadas == self.cuerpo_coordenadas[0]:
             puntaje = self.master.master.puntaje.get() + 1
             self.master.master.puntaje.set(puntaje)
@@ -170,19 +170,43 @@ class VivoritaPantalla(Canvas):
             self.comida_coordenadas = self.genera_comida_aleatoria()
             self.coords(self.find_withtag('comida'), *self.comida_coordenadas)
 
+            self.carga_dificultad()
+            
+            self.cambia_nivel()
+
+    def cambia_nivel(self):
+        if self.master.master.puntaje.get() == 5:
+                self.nivel += 1
+                self.cargar_bordes_ext()
+        elif self.master.master.puntaje.get() == 10:
+            self.nivel += 1
+            self.cargar_bordes_int()
+
+    def carga_dificultad(self):
+        if self.nivel == 1:
+            if self.master.master.puntaje.get() % 2 == 0:
+                if self.master.master.dificultad.get() == 1:
+                    velocidad = self.master.master.velocidad.get() - 1
+                    self.master.master.velocidad.set(velocidad)
+                else:
+                    velocidad = self.master.master.velocidad.get() - 3
+                    self.master.master.velocidad.set(velocidad)
+        if self.nivel == 2:
+            if self.master.master.puntaje.get() % 2 == 0:
+                if self.master.master.dificultad.get() == 1:
+                    velocidad = self.master.master.velocidad.get() - 2
+                    self.master.master.velocidad.set(velocidad)
+                else:
+                    velocidad = self.master.master.velocidad.get() - 5
+                    self.master.master.velocidad.set(velocidad)
+        if self.nivel == 3:
             if self.master.master.puntaje.get() % 2 == 0:
                 if self.master.master.dificultad.get() == 1:
                     velocidad = self.master.master.velocidad.get() - 3
                     self.master.master.velocidad.set(velocidad)
                 else:
-                    velocidad = self.master.master.velocidad.get() - 5
+                    velocidad = self.master.master.velocidad.get() - 6
                     self.master.master.velocidad.set(velocidad)
-            if self.master.master.puntaje.get() == 5:
-                self.nivel += 1
-                self.cargar_bordes_ext()
-            elif self.master.master.puntaje.get() == 10:
-                self.nivel += 1
-                self.cargar_bordes_int()
 
     def genera_comida_aleatoria_inicio(self):
         coordenada_X = random.randint(2, constantes.CELL_CANVA_WIDTH-1) * constantes.CELL_SIZE
@@ -245,11 +269,12 @@ class VivoritaPantalla(Canvas):
 
     # Movimiento perpetuo
     def bucle_juego(self):
-        if self.comprobar_colisiones():
+        if self.es_colision():
             self.fin_juego()
             t = Timer(5, lambda:[self.master.master.cambia_frame(PantallaRanking, self.master.master)])
             t.start()
             return
-        self.come_comida()
+
+        self.come_fruta()
         self.mover_vivorita()
         self.after(self.master.master.velocidad.get(), self.bucle_juego)

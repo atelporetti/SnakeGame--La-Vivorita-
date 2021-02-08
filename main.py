@@ -2,8 +2,6 @@ try:
     from tkinter import Tk, StringVar, IntVar
 except:
     from Tkinter import Tk, StringVar, IntVar
-from pantalla_juego import PantallaJuego
-from ranking import PantallaRanking
 import time
 import traceback
 import constantes
