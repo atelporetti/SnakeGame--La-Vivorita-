@@ -1,12 +1,11 @@
 try:
-    from tkinter import *
+    from tkinter import Tk, StringVar, IntVar
 except:
-    from Tkinter import *
+    from Tkinter import Tk, StringVar, IntVar
 import time
 import traceback
 import constantes
 from ventana_inicio import Inicio
-
 
 class Main(Tk):
 
@@ -42,12 +41,10 @@ class Main(Tk):
         self._frame = nuevo_frame
         self._frame.grid(row=0, column=0)
 
-
 try:
     if __name__ == "__main__":
         root = Main()
         root.cambia_frame(Inicio, root)
-        #root.cambia_frame(PantallaJuego, root)
         root.mainloop()
 except:
     traceback.print_exc()

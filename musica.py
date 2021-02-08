@@ -9,12 +9,12 @@ class Reproductor():
         pygame.mixer.init()
 
     def reproducir_musica(self, tema, volumen):
-        pygame.mixer.music.load(tema) #constantes.musica_en_juego
-        pygame.mixer.music.set_volume(volumen) #0.04
+        pygame.mixer.music.load(tema)
+        pygame.mixer.music.set_volume(volumen)
         pygame.mixer.music.play(-1)
     
     def reproducir_sonido(self, tema, volumen):
-        self.sonido = pygame.mixer.Sound(tema) #constantes.musica_comida
+        self.sonido = pygame.mixer.Sound(tema)
         self.sonido.set_volume(volumen)
         pygame.mixer.Sound.play(self.sonido)
 

@@ -11,7 +11,7 @@ class PantallaJuego(Frame):
         Frame.__init__(self, master)
         self.master = master
         self._frame = Frame(master)
-        self.config(background='yellow', width=constantes.WINDOW_WIDTH, height=constantes.WINDOW_HEIGHT)  # tcross, cross, dotbox
+        self.config(background='black', width=constantes.WINDOW_WIDTH, height=constantes.WINDOW_HEIGHT)
         self.grid(row=0, column=0, sticky='nsew')
         self.rowconfigure((0, 2), weight=1)
         self.columnconfigure((0, 1), weight=1)
@@ -20,19 +20,15 @@ class PantallaJuego(Frame):
         self.lb_nombre.grid(row=0, column=0, padx=0, pady=0)
         self.lb_nombre.config(bg=constantes.color_fondo, fg='white',
                             justify='left',
-                            font=(constantes.tipografia, 12),
-                            width=20)
+                            font=(constantes.tipografia, 12))
+
         self.lb_nombre = Label(self, textvariable=self.master.puntaje, font=(constantes.tipografia, 6, "bold"))
         self.lb_nombre.grid(row=0, column=1, padx=0, pady=0)
         self.lb_nombre.config(bg=constantes.color_fondo, fg='white',
                             justify='left',
-                            font=(constantes.tipografia, 12),
-                            width=20)
-        self.button = Button(self, text="Volver a jugar",command=lambda:[self.master.cambia_frame(Inicio, self.master)], font=(constantes.tipografia, 6, "bold"))
-        self.button.grid(row=0, column=2, sticky='nsew',padx=0, pady=0)
-        self.button.config(bg=constantes.color_fondo, fg='white',
-                            justify='left',
-                            font=(constantes.tipografia, 12),
-                            width=20)
+                            font=(constantes.tipografia, 12))
 
         self.vivora = VivoritaPantalla(self)
+        self.vivora.config(bg=constantes.color_fondo, width=constantes.CANVA_WIDTH,
+                    height=constantes.CANVA_HEIGHT, highlightthickness=0)
+        self.vivora.grid(row=1, column=0, columnspan=2)

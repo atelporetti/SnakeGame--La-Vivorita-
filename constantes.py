@@ -61,4 +61,5 @@ musica_victoria = 'Assets/audio/victoria.wav'
 
 #------------- ARCHIVOS ----------
 RANKING = 'Assets/other/ranking.csv'
+NOMBRES_COLUMNAS = ['Puntaje', 'Jugador', 'Nivel', 'Tiempo']
 #---------------------------------
