@@ -1,4 +1,3 @@
-from tkinter.constants import ANCHOR
 from ventana_inicio import Inicio
 import pandas as pd
 import constantes

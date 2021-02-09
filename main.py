@@ -7,7 +7,6 @@ import traceback
 import constantes
 from ventana_inicio import Inicio
 
-
 class Main(Tk):
 
     def __init__(self):
@@ -41,7 +40,6 @@ class Main(Tk):
             self._frame.grid_remove()
         self._frame = nuevo_frame
         self._frame.grid(row=0, column=0)
-
 
 try:
     if __name__ == "__main__":

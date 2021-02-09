@@ -1,8 +1,7 @@
 try:
-    from tkinter import Button, Frame, Label
+    from tkinter import Frame, Label
 except:
-    from Tkinter import Button, Frame, Label
-from ventana_inicio import Inicio
+    from Tkinter import Frame, Label
 import constantes
 from vivorita import VivoritaPantalla
 
