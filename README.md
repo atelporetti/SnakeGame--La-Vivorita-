@@ -49,6 +49,4 @@ _3. Instalar pandas:_
 ![LaVivorita_partida_GIF](https://user-images.githubusercontent.com/69491395/109425081-549c9c00-79c5-11eb-8d0a-2c655ce6b955.gif)
 
 
-![LaVivorita_puntaje_alto](https://user-images.githubusercontent.com/69491395/109424487-8bbd7e00-79c2-11eb-9233-8f2be68d9507.png)
-
 ![LaVivorita_fin_juego](https://user-images.githubusercontent.com/69491395/109424380-249fc980-79c2-11eb-834a-7899f0d37781.png)
