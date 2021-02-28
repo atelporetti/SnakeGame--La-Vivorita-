@@ -30,4 +30,7 @@ _3. Instalar pandas:_
 * Librerias:
   * tkinter (Interfaz gráfica de usuario)
   * pygame (uso: Reproducción de sonidos)
-  * pandas (uso: Persistencia de datos)
+  * pandas (uso: gestión de datos)
+
+
+![LaVivorita_partida_GIF](https://user-images.githubusercontent.com/69491395/109424066-e6ee7100-79c0-11eb-85a1-376262002583.gif)
